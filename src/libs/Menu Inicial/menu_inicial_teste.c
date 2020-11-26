@@ -9,8 +9,6 @@
 #define width 960
 #define height 672
 
-//Por enquanto, a tela inicial está com uma imagem aleatoria de fundo até Edson fazer uma arte pro menu inicial
-
 int main(){
     int time = 0;                                                                   //variavel para fazer o botao de start piscar no menu
     bool done = false, redraw = true;
@@ -56,7 +54,7 @@ int main(){
     fonte_creditos = al_load_font("fonte_menu_inicial.ttf", 30, 0);
     efeito_click = al_load_sample("efeito_sonoro_click.wav");
     somFundo = al_load_sample("NDKG_CreepyAtmosphere_Reg.wav");
-    background = al_load_bitmap("nymburk-rampart.jpg");
+    background = al_load_bitmap("menu_inicial_background.jpeg");
 
 
     //Creating
