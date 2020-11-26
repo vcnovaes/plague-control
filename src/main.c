@@ -1,48 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "libs/characters.h"
 #include "libs/controles.h"
-#include <stdio.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
-#include <stdlib.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 
-
-
+#define width 960
+#define height 672
 
 ALLEGRO_DISPLAY *display = NULL; 
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 ALLEGRO_TIMER *timer = NULL;
 //const int y_vel = 3;
 
-
 bool keys[4] = {false, false, false, false};
 
-
 char * IMG_walk_jogador[4] = {
-    "src/Graficos/medico/WALK/medico_walk_up.png",
-    "src/Graficos/medico/WALK/medico_walk_down.png",
-    "src/Graficos/medico/WALK/medico_walk_right.png",
-    "src/Graficos/medico/WALK/medico_walk_left.png"
+    "Graficos/medico/WALK/medico_walk_up.png",
+    "Graficos/medico/WALK/medico_walk_down.png",
+    "Graficos/medico/WALK/medico_walk_right.png",
+    "Graficos/medico/WALK/medico_walk_left.png"
 };
 char * IMG_attack_jogador[4] = {
-    "src/Graficos/medico/PUSH/medico_push_up.png",
-    "src/Graficos/medico/PUSH/medico_push_down.png",
-    "src/Graficos/medico/PUSH/medico_push_right.png",
-    "src/Graficos/medico/PUSH/medico_push_left.png"
+    "Graficos/medico/PUSH/medico_push_up.png",
+    "Graficos/medico/PUSH/medico_push_down.png",
+    "Graficos/medico/PUSH/medico_push_right.png",
+    "Graficos/medico/PUSH/medico_push_left.png"
 };
 char * IMG_Soldado_Medieval[3]  ={
-    "src/Graficos/Pixel_Art_Gamejam/Fase 1/Soldier/Knight Character Pack by RgsDev/Knight 1/knight 1 sword 1.png",
-    "src/Graficos/Pixel_Art_Gamejam/Fase 1/Soldier/Knight Character Pack by RgsDev/Knight 1/knight 1 sword 2.png",
-    "src/Graficos/Pixel_Art_Gamejam/Fase 1/Soldier/Knight Character Pack by RgsDev/Knight 1/knight 1 axe.png"
+    "Graficos/Pixel_Art_Gamejam/Fase 1/Soldier/Knight Character Pack by RgsDev/Knight 1/knight 1 sword 1.png",
+    "Graficos/Pixel_Art_Gamejam/Fase 1/Soldier/Knight Character Pack by RgsDev/Knight 1/knight 1 sword 2.png",
+    "Graficos/Pixel_Art_Gamejam/Fase 1/Soldier/Knight Character Pack by RgsDev/Knight 1/knight 1 axe.png"
     };
-// para cada imagem -- > height = 52  
-////////            ----> width = 196
+// para cada imagem ---> height = 52  
+////////            ---> width = 196
 
 
-/// Enum  para ser usado no switch para indentificar que graficos gerar
+/// Enum  para ser usado no switch para indentificar graficos gerar
 enum Fase{Fase1, Fase2, Fase3};
+enum STATE {FASE1, FASE2, FASE3, MENU, PAUSA, CREDITOS, GAME_OVER};
 
-
+//Mapas
+int mapFase1[21][30] = {
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+};
 
 int mapFase2[21][30] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -68,18 +94,37 @@ int mapFase2[21][30] = {
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 };
 
+int mapFase3[21][30] = {
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+};
 
 PERSONAGEM jogador;
 
-
 const int n_soldados_medievais = 9;  // numero de soldados medievais
-
-
 
 /// A função cria os soldados medievais, configurndo suas structs;
 ///
-SOLDADO_MEDIEVAL  * Soldado_medieval;
-
+SOLDADO_MEDIEVAL  *Soldado_medieval;
 
 int initAllegro() {
     // Initialize allegro
@@ -96,7 +141,7 @@ int initAllegro() {
     }
 
     // Create the display
-    display = al_create_display(960,672 );
+    display = al_create_display(width,height);
     if (!display) {
         fprintf(stderr, "Failed to create display.\n");
         return 1;
@@ -112,10 +157,12 @@ int initAllegro() {
     al_init_primitives_addon();
     al_install_keyboard();
     al_init_image_addon();
+
     // Register event sources
     al_register_event_source(event_queue, al_get_display_event_source(display));
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
     al_register_event_source(event_queue, al_get_keyboard_event_source());
+
     // inicializing player
     Criar_Personagem(&jogador,IMG_walk_jogador, IMG_attack_jogador, 22,22);
     Personagem_SetFrames(&jogador,4,32,32);
@@ -125,34 +172,151 @@ int initAllegro() {
 
 int main(int argc, char *argv[]) {
     int err = initAllegro();
-    if(err) {
+    if(err){
         return err;
     }
     double marcadorDeTempo = 0;
+    int time = 0;
     bool running = true;
     bool redraw = true;
     int times_of_attack_enemy = 0;
     int times_of_attack_player = 20;
     int Fase = Fase1;
+    int estado_atual = -1;
     POSICAO ultima_posicao_plyr;
-    // Display a black screen
-    al_clear_to_color(al_map_rgb(0, 0, 0));
-    al_flip_display();
+
+    ALLEGRO_BITMAP *background = NULL;                                             
+    ALLEGRO_FONT *fonte_start = NULL;
+    ALLEGRO_FONT *fonte_logo = NULL;
+    ALLEGRO_FONT *fonte_creditos = NULL;
+    ALLEGRO_SAMPLE *somFundo = NULL;
+    ALLEGRO_SAMPLE_INSTANCE *somFundoInstance = NULL;
+    ALLEGRO_BITMAP *Mapas[3];
+    ALLEGRO_BITMAP *tela_game_over = NULL;
+    ALLEGRO_BITMAP *tela_creditos = NULL;
+
+    //Initializing
+    al_install_audio();
+    al_init_acodec_addon();
+    al_init_font_addon();
+    al_init_ttf_addon();
+    al_reserve_samples(1);   
+
+    //Loading
+    Mapas[0] = al_load_bitmap("Graficos/Mapas/Fase 1/mapa_fase1_final.png");
+    Mapas[1] = al_load_bitmap("Graficos/Mapas/Fase 2/mapa_fase2_final.png");
+    Mapas[2] = al_load_bitmap("Graficos/Mapas/Fase 3/mapa_fase3_final.png");
+    fonte_start = al_load_font("fonte_menu_inicial.ttf", 36, 0);
+    //if(fonte_start == NULL)exit(-1);
+    fonte_logo = al_load_font("Graficos/Menu Inicial/Base 02.ttf", 88, 0);
+    fonte_creditos = al_load_font("Graficos/Menu Inicial/fonte_menu_inicial.ttf", 30, 0);
+    somFundo = al_load_sample("Graficos/Menu Inicial/NDKG_CreepyAtmosphere_Reg.wav");
+    background = al_load_bitmap("Graficos/Menu Inicial/menu_inicial_background.jpeg");
+    tela_game_over = al_load_bitmap("Graficos/Menu Inicial/game_over.jpeg");
+    tela_creditos = al_load_bitmap("Graficos/Menu Inicial/tela_creditos.jpeg");
+
+    //Creating
+    somFundoInstance = al_create_sample_instance(somFundo);
+
+    //Configurando musica de fundo
+    al_set_sample_instance_playmode(somFundoInstance, ALLEGRO_PLAYMODE_LOOP);
+    al_attach_sample_instance_to_mixer(somFundoInstance, al_get_default_mixer());
+
+    //Colocando a musica para tocar
+    //al_play_sample_instance(somFundoInstance);
+
+    //Inicializando o estado atual como o menu
+    estado_atual = MENU;
     
     // Start the timer
-    al_start_timer(timer);
-    ALLEGRO_BITMAP * Mapa_fase2 = al_load_bitmap("src/Graficos/Mapas/Fase 2/mapa_fase2_final.png");
-    if(Mapa_fase2 == NULL) exit(-1);
+    al_start_timer(timer); //Nao colocar nada entre essa linha de codigo e o while
+
     // Game loop
-    while (running) {
+    while(running) {
         ALLEGRO_EVENT event;
         ALLEGRO_TIMEOUT timeout;
         
-
         // Initialize timeout
         al_init_timeout(&timeout, 0.06);
         // Fetch the event (if one exists)
         bool get_event = al_wait_for_event_until(event_queue, &event, &timeout);
+
+        if(estado_atual == MENU){
+            al_draw_bitmap(background, 0, 0, 0);
+            al_draw_text(fonte_logo, al_map_rgb(255, 0, 0), width/2, height/4, ALLEGRO_ALIGN_CENTRE, "PLAGUE CONTROL");
+            if(time < 15){                                                                                                                  //fazer o texto "piscar"
+                al_draw_text(fonte_start, al_map_rgb(255, 255, 255), width/2, height/2, ALLEGRO_ALIGN_CENTRE, "PRESS SPACE TO START");
+            }
+            al_draw_text(fonte_creditos, al_map_rgb(255, 255, 255), width/2, height/1.65, ALLEGRO_ALIGN_CENTRE, "PRESS S TO SEE CREDITS");
+            al_flip_display();
+            if(time > 30) time = 0;
+            if(get_event){
+                switch(event.type){
+                    case ALLEGRO_EVENT_DISPLAY_CLOSE:  //fechar o programa
+                        running = true;
+                        break;
+                    case ALLEGRO_EVENT_KEY_DOWN:
+                        switch (event.keyboard.keycode)
+                        {
+                        case ALLEGRO_KEY_SPACE:       //se o usuario pressionar espaco, comecar o jogo 
+                            estado_atual = FASE1;
+                            break;
+                        case ALLEGRO_KEY_S:           //se o usuario pressionar a tecla S, mostrar os creditos
+                            estado_atual = CREDITOS;
+                            break;
+                        default:
+                            break;
+                        }
+                      break;
+                    
+                }
+            }
+        }
+        else if(estado_atual == GAME_OVER){
+            al_draw_bitmap(tela_game_over, 0, 0, 0);
+            al_flip_display();
+            if(get_event){
+                switch(event.type){
+                    case ALLEGRO_EVENT_DISPLAY_CLOSE:  //fechar o programa
+                        running = true;
+                        break;
+                    
+                    case ALLEGRO_EVENT_KEY_DOWN:       //se o usuario pressionar espaco, recomecar o jogo
+                        switch (event.keyboard.keycode)
+                        {
+                        case ALLEGRO_KEY_SPACE:
+                            estado_atual = FASE1;
+                            break;
+                        default:
+                            break;
+                        }
+                            
+                }
+            }
+        }
+        else if(estado_atual == CREDITOS){
+            al_draw_bitmap(tela_creditos, 0, 0, 0);
+            al_flip_display();
+            if(get_event){
+                switch(event.type){
+                    case ALLEGRO_EVENT_DISPLAY_CLOSE:  //fechar o programa
+                        running = true;
+                        break;
+                    case ALLEGRO_EVENT_KEY_DOWN:       //se o usuario pressionar espaco, voltar para o menu inicial
+                            switch (event.keyboard.keycode)
+                            {
+                            case ALLEGRO_KEY_SPACE:
+                                estado_atual = MENU;
+                                break;
+                            
+                            default:
+                                break;
+                            }
+
+                }
+            }
+        }
+
 
         // Handle the event
         if (get_event) {
@@ -233,14 +397,14 @@ int main(int argc, char *argv[]) {
             int posicao_jogador = (Display_WIDTH - 50)/2; // aqui vai ficar a posição do jogador
             al_clear_to_color(al_map_rgb(125, 205, 0 ));
 
-            al_draw_bitmap(Mapa_fase2,0,0,0);
+            al_draw_bitmap(Mapas[2],0,0,0);
             if(jogador.Acao ==  Walk){
                         Personagem_AtualizarPosicao(&jogador,keys, mapFase2);
                         al_draw_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
                                 jogador.frames.currentFrame, 0, jogador.frames.w_Frame,
                                  jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0); 
                     }
-                      /* code */
+                      //code
                     if( jogador.Acao ==  Attack || times_of_attack_player > 0){
                         Personagem_AtualizarPosicao(&jogador,keys,mapFase2);
                         al_draw_bitmap_region(jogador.imagem_ataque[jogador.CurrentDir],
@@ -341,8 +505,18 @@ int main(int argc, char *argv[]) {
 
     // Clean up
     free(Soldado_medieval);
+    for(int i = 0; i < 3; i++)
+        al_destroy_bitmap(Mapas[i]);
+    al_destroy_bitmap(tela_game_over);
+    al_destroy_bitmap(tela_creditos);
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
+    al_destroy_sample_instance(somFundoInstance);
+    al_destroy_font(fonte_start);
+    al_destroy_font(fonte_logo);
+    al_destroy_font(fonte_creditos);
+    al_destroy_sample(somFundo);
+    al_destroy_bitmap(background);
 
     return 0;
 }

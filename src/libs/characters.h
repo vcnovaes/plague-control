@@ -40,7 +40,7 @@ enum Direcoes {
 typedef struct  localizacao_matriz
 {
     int i;
-    int j
+    int j;
 }MATRIZ_LOCALIZACAO;
 
 enum Actions{
