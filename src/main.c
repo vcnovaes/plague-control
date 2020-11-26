@@ -206,7 +206,7 @@ int main(int argc, char *argv[]) {
     Mapas[0] = al_load_bitmap("Graficos/Mapas/Fase 1/mapa_fase1_final.png");
     Mapas[1] = al_load_bitmap("Graficos/Mapas/Fase 2/mapa_fase2_final.png");
     Mapas[2] = al_load_bitmap("Graficos/Mapas/Fase 3/mapa_fase3_final.png");
-    fonte_start = al_load_font("fonte_menu_inicial.ttf", 36, 0);
+    fonte_start = al_load_font("Graficos/Menu Inicial/fonte_menu_inicial.ttf", 36, 0);
     //if(fonte_start == NULL)exit(-1);
     fonte_logo = al_load_font("Graficos/Menu Inicial/Base 02.ttf", 88, 0);
     fonte_creditos = al_load_font("Graficos/Menu Inicial/fonte_menu_inicial.ttf", 30, 0);
@@ -316,190 +316,189 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
+        else if(estado_atual == FASE1){
+            al_draw_bitmap(Mapas[0], 0, 0, 0);
+            al_flip_display();
 
-
-        // Handle the event
-        if (get_event) {
-            switch (event.type) {
-                case ALLEGRO_EVENT_TIMER:
-                    redraw = true;
-                    break;
-                case ALLEGRO_EVENT_DISPLAY_CLOSE:
-                    running = false;
-                    break;
-                case ALLEGRO_EVENT_KEY_DOWN:
-                    switch(event.keyboard.keycode)
-                    {
-                        case ALLEGRO_KEY_UP:
-                            
-                            jogador.Acao = Walk;
-                            jogador.CurrentDir = North;
-                            
-                            keys[UP] = true;
-                        
+            // Handle the event
+            if (get_event) {
+                switch (event.type) {
+                    case ALLEGRO_EVENT_TIMER:
+                        redraw = true;
                         break;
-                        
-                        case ALLEGRO_KEY_DOWN:
-                            jogador.Acao = Walk;
-                            jogador.CurrentDir = South;
-                            
-                            keys[DOWN] = true;
+                    case ALLEGRO_EVENT_DISPLAY_CLOSE:
+                        running = false;
                         break;
-                        case ALLEGRO_KEY_LEFT:
-                            jogador.Acao = Walk;
-                            jogador.CurrentDir = West;
+                    case ALLEGRO_EVENT_KEY_DOWN:
+                        switch(event.keyboard.keycode)
+                        {
+                            case ALLEGRO_KEY_UP:
+                                
+                                jogador.Acao = Walk;
+                                jogador.CurrentDir = North;
+                                
+                                keys[UP] = true;
                             
-                            keys[LEFT] = true;
-                        break;
-                        case ALLEGRO_KEY_RIGHT:
-                            jogador.Acao = Walk;
-                            jogador.CurrentDir = East;
-                            
-                            keys[RIGHT] = true;
-                        break;
-
-                        case ALLEGRO_KEY_Z:
-                            jogador.Acao = Attack;
-                            times_of_attack_player = 80;
                             break;
-                    }
-                    break;
-                case ALLEGRO_EVENT_KEY_UP:
-                    switch(event.keyboard.keycode)
-                    {
-                        case ALLEGRO_KEY_UP:
-                            keys[UP] = false;
-                        break;
-                        case ALLEGRO_KEY_DOWN:
-                            keys[DOWN] = false;
-                        break;
-                        case ALLEGRO_KEY_LEFT:
-                            keys[LEFT] = false;
-                        break;
-                        case ALLEGRO_KEY_RIGHT:
-                            keys[RIGHT] = false;
-                        break;
+                            
+                            case ALLEGRO_KEY_DOWN:
+                                jogador.Acao = Walk;
+                                jogador.CurrentDir = South;
+                                
+                                keys[DOWN] = true;
+                            break;
+                            case ALLEGRO_KEY_LEFT:
+                                jogador.Acao = Walk;
+                                jogador.CurrentDir = West;
+                                
+                                keys[LEFT] = true;
+                            break;
+                            case ALLEGRO_KEY_RIGHT:
+                                jogador.Acao = Walk;
+                                jogador.CurrentDir = East;
+                                
+                                keys[RIGHT] = true;
+                            break;
+
+                            case ALLEGRO_KEY_Z:
+                                jogador.Acao = Attack;
+                                times_of_attack_player = 80;
+                                break;
                         }
-                    
-                    jogador.Acao = Nothing;
+                        break;
+                    case ALLEGRO_EVENT_KEY_UP:
+                        switch(event.keyboard.keycode)
+                        {
+                            case ALLEGRO_KEY_UP:
+                                keys[UP] = false;
+                            break;
+                            case ALLEGRO_KEY_DOWN:
+                                keys[DOWN] = false;
+                            break;
+                            case ALLEGRO_KEY_LEFT:
+                                keys[LEFT] = false;
+                            break;
+                            case ALLEGRO_KEY_RIGHT:
+                                keys[RIGHT] = false;
+                            break;
+                            }
+                        
+                        jogador.Acao = Nothing;
+                        break;
+
+                    default:
+                        //jogador.Acao = Nothing;
+                        fprintf(stderr, "Unsupported event received: %d\n", event.type);
+                        break;
+                }
+            }
+            if(event.type == ALLEGRO_EVENT_TIMER){
+            // Check if we need to redraw
+            if (redraw && al_is_event_queue_empty(event_queue)) {
+                // Redraw
+                int posicao_jogador = (Display_WIDTH - 50)/2; // aqui vai ficar a posição do jogador
+                al_clear_to_color(al_map_rgb(125, 205, 0 ));
+
+                al_draw_bitmap(Mapas[0],0,0,0);
+                if(jogador.Acao ==  Walk){
+                            Personagem_AtualizarPosicao(&jogador,keys, mapFase1);
+                            al_draw_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
+                                    jogador.frames.currentFrame, 0, jogador.frames.w_Frame,
+                                    jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0); 
+                        }
+                        //code
+                        if( jogador.Acao ==  Attack || times_of_attack_player > 0){
+                            Personagem_AtualizarPosicao(&jogador,keys,mapFase1);
+                            al_draw_bitmap_region(jogador.imagem_ataque[jogador.CurrentDir],
+                                    jogador.frames.currentFrame, 0, jogador.frames.w_Frame,
+                                    jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0);
+                            times_of_attack_player--; 
+                            //printf("%d  - %d\n", times_of_attack_player, jogador.frames.currentFrame);
+                        }
+                        else{    
+                        al_draw_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
+                                    jogador.frames.currentFrame, 0, jogador.frames.w_Frame,
+                                    jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0); 
+                        }
+                        //MudarFrame_Personagem(&jogador,128);
+                        ultima_posicao_plyr = jogador.pos;
+                        
+
+                switch (Fase){
+                    case Fase1:
+                            
+                            //Soldados Medievais
+                            for(int i = 0 ; i < n_soldados_medievais ; i++)
+                            {   // int timing = (al_get_time() - marcadorDeTempo) + timing;  
+                                bool hitted = false;
+                                /// esse if verifica o intervalo para mudar de frame 
+                                // esse numero esquisito ai é o intervalo
+                                //printf("\n%lf",(timing));
+                                if((al_get_time() - marcadorDeTempo) > 0.03169 || marcadorDeTempo == 0){    
+                                    //timing = 0;
+                                    if(!Soldado_medieval[i].dir && (Soldado_medieval[i].pos.x < posicao_jogador) 
+                                    && Soldado_medieval[i].action == sm_walk){
+                                        Soldado_medieval[i].pos.x += Soldado_medieval[i].pos.dx;
+                                    }else if(Soldado_medieval[i].dir == 1 && Soldado_medieval[i].pos.x > 0 && 
+                                        Soldado_medieval[i].action == sm_walk){
+                                    Soldado_medieval[i].pos.x -= Soldado_medieval[i].pos.dx;
+                                    }else if(Soldado_medieval[i].action == sm_walk){
+                                        Soldado_medieval[i].dir = !Soldado_medieval[i].dir;
+                                    }
+                                    Soldado_medieval[i].sprite.curr_Y = Soldado_medieval[i].sprite.Height * Soldado_medieval[i].action;
+                                    if((Soldado_medieval[i].sprite.curr_X + Soldado_medieval[i].sprite.Width )< 448
+                                        && Soldado_medieval[i].action != sm_death){
+                                        Soldado_medieval[i].sprite.curr_X += Soldado_medieval[i].sprite.Width;
+                                    }else{
+                                    Soldado_medieval[i].sprite.curr_X  = 0;
+                                    }
+                                    if(Soldado_medieval[i].pos.x == posicao_jogador){
+                                        Soldado_medieval[i].action = sm_attack;
+                                        times_of_attack_enemy += 1;
+                                    }
+                                    /// isso meio que  ta mensurando o tempo de ataque
+                                    if(times_of_attack_enemy > 100){
+                                        Soldado_medieval[i].action = sm_walk;
+                                    }
+                                    // a part e da morte não está funcionando muito bem
+                                    if(Soldado_medieval[i].vida  <= 0){
+                                        Soldado_medieval[i].action = sm_death;
+                                    }
+                                    if(Soldado_medieval[i].action == sm_death){
+                                        Soldado_medieval[i].sprite.curr_Y = 3;
+                                        Soldado_medieval[i].sprite.curr_X = 192;
+                                    }
+                                    
+                                        //Soldado_medieval[i].action= sm_death;  
+                                    if(Soldado_medieval[i].pos.x > 10 && Soldado_medieval[i].pos.x < 12 ){
+                                        hitted = true;
+                                    }
+                                    
+                            
+                                //printf("EM Y_IMG %d X_IMG %d\n", Soldado_medieval[i].sprite.curr_Y, Soldado_medieval[i].sprite.curr_X);
+                            }
+                            if(!Soldado_medieval[i].hitted){
+                                al_draw_bitmap_region(Soldado_medieval[i].sprite.Imagem,
+                                Soldado_medieval[i].sprite.curr_X,Soldado_medieval[i].sprite.curr_Y,
+                                Soldado_medieval[i].sprite.Width, Soldado_medieval[i].sprite.Height,
+                                Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y,
+                                Soldado_medieval[i].dir);
+                            }
+                        }  
+                        break;
+                case Fase2:
                     break;
 
                 default:
-                    //jogador.Acao = Nothing;
-                    fprintf(stderr, "Unsupported event received: %d\n", event.type);
                     break;
-            }
-        }
-        if(event.type == ALLEGRO_EVENT_TIMER){
-        // Check if we need to redraw
-        if (redraw && al_is_event_queue_empty(event_queue)) {
-            // Redraw
-            int posicao_jogador = (Display_WIDTH - 50)/2; // aqui vai ficar a posição do jogador
-            al_clear_to_color(al_map_rgb(125, 205, 0 ));
-
-            al_draw_bitmap(Mapas[2],0,0,0);
-            if(jogador.Acao ==  Walk){
-                        Personagem_AtualizarPosicao(&jogador,keys, mapFase2);
-                        al_draw_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
-                                jogador.frames.currentFrame, 0, jogador.frames.w_Frame,
-                                 jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0); 
-                    }
-                      //code
-                    if( jogador.Acao ==  Attack || times_of_attack_player > 0){
-                        Personagem_AtualizarPosicao(&jogador,keys,mapFase2);
-                        al_draw_bitmap_region(jogador.imagem_ataque[jogador.CurrentDir],
-                                jogador.frames.currentFrame, 0, jogador.frames.w_Frame,
-                                 jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0);
-                        times_of_attack_player--; 
-                        //printf("%d  - %d\n", times_of_attack_player, jogador.frames.currentFrame);
-                    }
-                    else{    
-                     al_draw_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
-                                jogador.frames.currentFrame, 0, jogador.frames.w_Frame,
-                                 jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0); 
-                    }
-                    //MudarFrame_Personagem(&jogador,128);
-                    ultima_posicao_plyr = jogador.pos;
-                    
-
-            switch (Fase)
-            {
-            case Fase1:
-                    
-                    //Soldados Medievais
-                    for(int i = 0 ; i < n_soldados_medievais ; i ++)
-                    {   // int timing = (al_get_time() - marcadorDeTempo) + timing;  
-                        bool hitted = false;
-                        /// esse if verifica o intervalo para mudar de frame 
-                        // esse numero esquisito ai é o intervalo
-                        //printf("\n%lf",(timing));
-                        if((al_get_time() - marcadorDeTempo) > 0.03169 || marcadorDeTempo == 0){    
-                            //timing = 0;
-                            if(!Soldado_medieval[i].dir && (Soldado_medieval[i].pos.x < posicao_jogador) 
-                            && Soldado_medieval[i].action == sm_walk){
-                                Soldado_medieval[i].pos.x += Soldado_medieval[i].pos.dx;
-                            }else if(Soldado_medieval[i].dir == 1 && Soldado_medieval[i].pos.x > 0 && 
-                                Soldado_medieval[i].action == sm_walk){
-                            Soldado_medieval[i].pos.x -= Soldado_medieval[i].pos.dx;
-                            }else if(Soldado_medieval[i].action == sm_walk){
-                                Soldado_medieval[i].dir = !Soldado_medieval[i].dir;
-                            }
-                            Soldado_medieval[i].sprite.curr_Y = Soldado_medieval[i].sprite.Height * Soldado_medieval[i].action;
-                            if((Soldado_medieval[i].sprite.curr_X + Soldado_medieval[i].sprite.Width )< 448
-                                && Soldado_medieval[i].action != sm_death){
-                                Soldado_medieval[i].sprite.curr_X += Soldado_medieval[i].sprite.Width;
-                            }else{
-                            Soldado_medieval[i].sprite.curr_X  = 0;
-                            }
-                            if(Soldado_medieval[i].pos.x == posicao_jogador){
-                                Soldado_medieval[i].action = sm_attack;
-                                times_of_attack_enemy += 1;
-                            }
-                            /// isso meio que  ta mensurando o tempo de ataque
-                            if(times_of_attack_enemy > 100){
-                                Soldado_medieval[i].action = sm_walk;
-                            }
-                            // a part e da morte não está funcionando muito bem
-                            if(Soldado_medieval[i].vida  <= 0){
-                                Soldado_medieval[i].action = sm_death;
-                            }
-                            if(Soldado_medieval[i].action == sm_death){
-                                Soldado_medieval[i].sprite.curr_Y = 3;
-                                Soldado_medieval[i].sprite.curr_X = 192;
-                            }
-                            
-                                //Soldado_medieval[i].action= sm_death;  
-                            if(Soldado_medieval[i].pos.x > 10 && Soldado_medieval[i].pos.x < 12 ){
-                                hitted = true;
-                            }
-                            
-                    
-                        //printf("EM Y_IMG %d X_IMG %d\n", Soldado_medieval[i].sprite.curr_Y, Soldado_medieval[i].sprite.curr_X);
-                    }
-                    if(!Soldado_medieval[i].hitted)
-                            {
-                            al_draw_bitmap_region(Soldado_medieval[i].sprite.Imagem,
-                                            Soldado_medieval[i].sprite.curr_X,Soldado_medieval[i].sprite.curr_Y,
-                                            Soldado_medieval[i].sprite.Width, Soldado_medieval[i].sprite.Height,
-                                            Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y,
-                                            Soldado_medieval[i].dir);
-                            }
-                        
+                }
                 
-                }  
-                break;
-            case Fase2:
-                break;
-
-            default:
-                break;
+                al_flip_display();
+                marcadorDeTempo= al_get_time();
+                redraw = false;
+                
+                }
             }
-            
-            al_flip_display();
-            marcadorDeTempo= al_get_time();
-
-            redraw = false;
-        }
         }
     } 
 
