@@ -79,8 +79,6 @@ typedef struct Soldado_Medieval{
     int dir;    // direação do soldado
     int action;   //acao do soldado
     bool hitted;  // se o soldado levou hit
-
-
      // Se o soldado levou um hit o ideal é que ele pisquer para indicar que foi  atingdido
 
     // Sugestão de adicionar o campo IsDead para ver se o soldado está vivo

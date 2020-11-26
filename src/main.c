@@ -196,7 +196,7 @@ int main(int argc, char *argv[]) {
 
                         case ALLEGRO_KEY_Z:
                             jogador.Acao = Attack;
-                            times_of_attack_player = 20;
+                            times_of_attack_player = 80;
                             break;
                     }
                     break;
