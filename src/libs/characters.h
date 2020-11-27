@@ -87,6 +87,7 @@ typedef struct Soldado_Medieval{
     POSICAO pos;    ///posicao do soldado no display principal 
     int dir;    // direação do soldado
     int action;   //acao do soldado
+    int tipo;
     bool hitted;  // se o soldado levou hit
      // Se o soldado levou um hit o ideal é que ele pisquer para indicar que foi  atingdido
 
@@ -116,5 +117,8 @@ void MudarFrame_Personagem(PERSONAGEM  * personagem , int IMG_total_W);
 bool HoraDoAtaque(int pos_inimigo_x, int pos_inimigo_y, POSICAO jogador);
 void Criar_Soldado_Militar(SOLDADO_MEDIEVAL **Soldado_militar, int n_soldados_militares,
                             char * Imagens_RUN[4], char * Imagens_ATTACK[4], int map[21][30]);
+
+void Criar_InimigosFase3(SOLDADO_MEDIEVAL **InimigosF3, int n_inimigos, char *Imagens[2], int map[21][30]);
+
 
 #endif

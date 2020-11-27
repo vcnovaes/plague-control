@@ -187,3 +187,57 @@ bool HoraDoAtaque(int pos_inimigo_x, int pos_inimigo_y, POSICAO pos_jogador){
 
     return ataque;
 }
+
+void Criar_InimigosFase3(SOLDADO_MEDIEVAL **InimigosF3, int n_inimigos, char *Imagens[2], int map[21][30]){
+    
+    (*InimigosF3) = (SOLDADO_MEDIEVAL * )malloc(n_inimigos*sizeof(SOLDADO_MEDIEVAL));
+    if(InimigosF3 ==NULL)exit(-1);
+    for(int i  = 0 ;  i  <n_inimigos; i++)
+            {   
+               // Carrega a imagem do soldado medieval,  i%3 é pq existem apenas tres
+        // modelos de soldados diferentes/ assim  o modelo gerado no display seria
+        // 'aleatório'
+            printf("%s",Imagens[i%2]);
+            (*InimigosF3)[i].sprite.Imagem =  al_load_bitmap(Imagens[i%2]);
+            if((*InimigosF3)[i].sprite.Imagem == NULL) {
+                printf("\nInimigo  error\n");
+                exit(-1);}
+            else{
+                printf("\nInimigo criado\n");
+            }
+            (*InimigosF3)[i].sprite.Height = 32;
+                (*InimigosF3)[i].sprite.Width  = 32;
+                (*InimigosF3)[i].sprite.curr_X = 0;
+                (*InimigosF3)[i].sprite.curr_Y = 0;
+            
+            if(i%2)
+            {   (*InimigosF3)[i].tipo = 1;
+                (*InimigosF3)[i].sprite.n_colunas   = 2;
+                (*InimigosF3)[i].sprite.n_linhas    = 1;
+            }else{
+                (*InimigosF3)[i].tipo = 0;
+                (*InimigosF3)[i].sprite.n_colunas   = 1;
+                (*InimigosF3)[i].sprite.n_linhas    = 1;
+            }
+            (*InimigosF3)[i].pos.x = (rand() % (Display_WIDTH  + 1)) + 0;
+            (*InimigosF3)[i].pos.y = (rand() % (Display_HEIGHT  - 150));
+            //Esse loop assegura a posição inicial do soldado não ser um obstaculo
+            
+            
+            (*InimigosF3)[i].pos.dx = 3;
+            (*InimigosF3)[i].pos.dy = 3;
+            while (Existe_Obstaculo((*InimigosF3)[i].pos.x + (*InimigosF3)[i].pos.dx,
+                    (*InimigosF3)[i].pos.y + (*InimigosF3)[i].pos.dy, map))
+            {
+                (*InimigosF3)[i].pos.x = (rand() % (Display_WIDTH  - 100 + 1)) + 0;
+                (*InimigosF3)[i].pos.y = (rand() % (Display_HEIGHT  - 150));
+            
+            }
+            (*InimigosF3)[i].dir = sm_esquerda;
+            (*InimigosF3)[i].action = sm_walk;
+            (*InimigosF3)[i].vida = 4;
+            (*InimigosF3)[i].hitted  = false;
+        }
+
+
+}
