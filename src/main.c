@@ -43,7 +43,7 @@ char * IMG_Soldado_Medieval[3]  ={
 
 /// Enum  para ser usado no switch para indentificar graficos gerar
 enum Fase{Fase1, Fase2, Fase3};
-enum STATE {FASE1, FASE2, FASE3, MENU, PAUSA, CREDITOS, GAME_OVER};
+enum STATE {FASE1, FASE2, FASE3, MENU, PAUSA, INSTRUCOES, CREDITOS, GAME_OVER};
 
 //Mapas
 int mapFase1[21][30] = {
@@ -194,6 +194,7 @@ int main(int argc, char *argv[]) {
     ALLEGRO_BITMAP *Mapas[3];
     ALLEGRO_BITMAP *tela_game_over = NULL;
     ALLEGRO_BITMAP *tela_creditos = NULL;
+    ALLEGRO_BITMAP *tutorial = NULL;
 
     //Initializing
     al_install_audio();
@@ -214,6 +215,7 @@ int main(int argc, char *argv[]) {
     background = al_load_bitmap("Graficos/Menu Inicial/menu_inicial_background.jpeg");
     tela_game_over = al_load_bitmap("Graficos/Menu Inicial/game_over.jpeg");
     tela_creditos = al_load_bitmap("Graficos/Menu Inicial/tela_creditos.jpeg");
+    tutorial = al_load_bitmap("Graficos/Menu Inicial/instrucoes.jpeg");
 
     //Creating
     somFundoInstance = al_create_sample_instance(somFundo);
@@ -223,7 +225,7 @@ int main(int argc, char *argv[]) {
     al_attach_sample_instance_to_mixer(somFundoInstance, al_get_default_mixer());
 
     //Colocando a musica para tocar
-    //al_play_sample_instance(somFundoInstance);
+    al_play_sample_instance(somFundoInstance);
 
     //Inicializando o estado atual como o menu
     estado_atual = MENU;
@@ -243,17 +245,18 @@ int main(int argc, char *argv[]) {
 
         if(estado_atual == MENU){
             al_draw_bitmap(background, 0, 0, 0);
-            al_draw_text(fonte_logo, al_map_rgb(255, 0, 0), width/2, height/4, ALLEGRO_ALIGN_CENTRE, "PLAGUE CONTROL");
+            al_draw_text(fonte_logo, al_map_rgb(255, 0, 0), width/2, height/6, ALLEGRO_ALIGN_CENTRE, "PLAGUE CONTROL");
             if(time < 15){                                                                                                                  //fazer o texto "piscar"
-                al_draw_text(fonte_start, al_map_rgb(255, 255, 255), width/2, height/2, ALLEGRO_ALIGN_CENTRE, "PRESS SPACE TO START");
+                al_draw_text(fonte_start, al_map_rgb(255, 255, 255), width/2, height/2.5, ALLEGRO_ALIGN_CENTRE, "PRESS SPACE TO START");
             }
-            al_draw_text(fonte_creditos, al_map_rgb(255, 255, 255), width/2, height/1.65, ALLEGRO_ALIGN_CENTRE, "PRESS S TO SEE CREDITS");
+            al_draw_text(fonte_creditos, al_map_rgb(255, 255, 255), width/2, height/2, ALLEGRO_ALIGN_CENTRE, "PRESS X TO SEE HOW TO PLAY");
+            al_draw_text(fonte_creditos, al_map_rgb(255, 255, 255), width/2, height/1.7, ALLEGRO_ALIGN_CENTRE, "PRESS S TO SEE CREDITS");
             al_flip_display();
             if(time > 30) time = 0;
             if(get_event){
                 switch(event.type){
                     case ALLEGRO_EVENT_DISPLAY_CLOSE:  //fechar o programa
-                        running = true;
+                        running = false;
                         break;
                     case ALLEGRO_EVENT_KEY_DOWN:
                         switch (event.keyboard.keycode)
@@ -264,11 +267,33 @@ int main(int argc, char *argv[]) {
                         case ALLEGRO_KEY_S:           //se o usuario pressionar a tecla S, mostrar os creditos
                             estado_atual = CREDITOS;
                             break;
+                        case ALLEGRO_KEY_X:           //se o usuario pressionar a tecla S, mostrar as instrucoes
+                            estado_atual = INSTRUCOES;
+                            break;
                         default:
                             break;
                         }
                       break;
                     
+                }
+            }
+        }
+        else if(estado_atual == INSTRUCOES){
+            al_draw_bitmap(tela_game_over, 0, 0, 0); //provisoria
+            al_flip_display();
+            if(get_event){
+                switch(event.type){
+                    case ALLEGRO_EVENT_DISPLAY_CLOSE:  //fechar o programa
+                        running = false;
+                        break;
+                    case ALLEGRO_EVENT_KEY_DOWN:       //se o usuario pressionar espaco, voltar para o menu inicial
+                        switch (event.keyboard.keycode){
+                            case ALLEGRO_KEY_SPACE:
+                                estado_atual = MENU;
+                                break;
+                            default:
+                                 break;
+                        }       
                 }
             }
         }
@@ -278,7 +303,7 @@ int main(int argc, char *argv[]) {
             if(get_event){
                 switch(event.type){
                     case ALLEGRO_EVENT_DISPLAY_CLOSE:  //fechar o programa
-                        running = true;
+                        running = false;
                         break;
                     
                     case ALLEGRO_EVENT_KEY_DOWN:       //se o usuario pressionar espaco, recomecar o jogo
@@ -318,6 +343,7 @@ int main(int argc, char *argv[]) {
         }
         else if(estado_atual == FASE1){
             al_draw_bitmap(Mapas[0], 0, 0, 0);
+            al_draw_textf(fonte_creditos, al_map_rgb(255, 0, 0), 40, 20, ALLEGRO_ALIGN_LEFT, "Vidas: %d", jogador.vida);
             al_flip_display();
 
             // Handle the event
@@ -506,6 +532,7 @@ int main(int argc, char *argv[]) {
     free(Soldado_medieval);
     for(int i = 0; i < 3; i++)
         al_destroy_bitmap(Mapas[i]);
+    al_destroy_bitmap(tutorial);
     al_destroy_bitmap(tela_game_over);
     al_destroy_bitmap(tela_creditos);
     al_destroy_display(display);
