@@ -202,17 +202,17 @@ int main(int argc, char *argv[]) {
     bool redraw = true;
     int times_of_attack_enemy = 0;
     int times_of_attack_player = 20;
-    int Fase = Fase3;
+    int Fase = Fase1;
     int estado_atual = -1;
     POSICAO curr_posicao_plyr;
 
-    ALLEGRO_BITMAP *background = NULL;                                             
-    ALLEGRO_FONT *fonte_start = NULL;
-    ALLEGRO_FONT *fonte_logo = NULL;
     ALLEGRO_FONT *fonte_creditos = NULL;
     ALLEGRO_SAMPLE *somFundo = NULL;
     ALLEGRO_SAMPLE_INSTANCE *somFundoInstance = NULL;
     ALLEGRO_BITMAP *Mapas[3];
+    ALLEGRO_BITMAP *background = NULL;  
+    ALLEGRO_FONT *fonte_start = NULL;
+    ALLEGRO_FONT *fonte_logo = NULL;
     ALLEGRO_BITMAP *tela_game_over = NULL;
     ALLEGRO_BITMAP *tela_creditos = NULL;
     ALLEGRO_BITMAP *tutorial = NULL;
@@ -246,7 +246,7 @@ int main(int argc, char *argv[]) {
     al_attach_sample_instance_to_mixer(somFundoInstance, al_get_default_mixer());
 
     //Colocando a musica para tocar
-    al_play_sample_instance(somFundoInstance);
+    //al_play_sample_instance(somFundoInstance);
 
     //Inicializando o estado atual como o menu
     estado_atual = MENU;
@@ -270,7 +270,7 @@ int main(int argc, char *argv[]) {
             if(time < 15){                                                                                                                  //fazer o texto "piscar"
                 al_draw_text(fonte_start, al_map_rgb(255, 255, 255), width/2, height/2.5, ALLEGRO_ALIGN_CENTRE, "PRESS SPACE TO START");
             }
-            al_draw_text(fonte_creditos, al_map_rgb(255, 255, 255), width/2, height/2, ALLEGRO_ALIGN_CENTRE, "PRESS X TO SEE HOW TO PLAY");
+            al_draw_text(fonte_creditos, al_map_rgb(255, 255, 255), width/2, height/2, ALLEGRO_ALIGN_CENTRE, "PRESS X TO HELP");
             al_draw_text(fonte_creditos, al_map_rgb(255, 255, 255), width/2, height/1.7, ALLEGRO_ALIGN_CENTRE, "PRESS S TO SEE CREDITS");
             al_flip_display();
             if(time > 30) time = 0;
@@ -365,7 +365,7 @@ int main(int argc, char *argv[]) {
         else if(estado_atual == FASE1 || estado_atual == FASE2 || estado_atual == FASE3){
             al_draw_bitmap(Mapas[Fase], 0, 0, 0);
             al_draw_textf(fonte_creditos, al_map_rgb(255, 0, 0), 40, 20, ALLEGRO_ALIGN_LEFT, "Vidas: %d", jogador.vida);
-           // al_flip_display();
+            //al_flip_display();
 
             // Handle the event
             if (get_event) {
@@ -446,39 +446,37 @@ int main(int argc, char *argv[]) {
                 //int posicao_jogador = (Display_WIDTH - 50)/2; // aqui vai ficar a posição do jogador
                 al_clear_to_color(al_map_rgb(125, 205, 0 ));
 
-                al_draw_bitmap(Mapas[Fase],0,0,0);
+                al_draw_bitmap(Mapas[Fase], 0, 0, 0);
                 if(jogador.Acao ==  Walk){
-                            Personagem_AtualizarPosicao(&jogador,keys, bit_map_Fase1);
-                            al_draw_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
-                                    jogador.frames.currentFrame, 0, jogador.frames.w_Frame,
-                                    jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0); 
-                        }
-                        //code
-                        if( jogador.Acao ==  Attack || times_of_attack_player > 0){
-                            Personagem_AtualizarPosicao(&jogador,keys,bit_map_Fase1);
-                            al_draw_bitmap_region(jogador.imagem_ataque[jogador.CurrentDir],
-                                    jogador.frames.currentFrame, 0, jogador.frames.w_Frame,
-                                    jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0);
-                            times_of_attack_player--; 
-                            //printf("%d  - %d\n", times_of_attack_player, jogador.frames.currentFrame);
-                        }
-                        else{    
-                        al_draw_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
-                                    jogador.frames.currentFrame, 0, jogador.frames.w_Frame,
-                                    jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0); 
-                        }
-                        //MudarFrame_Personagem(&jogador,128);
-                        
+                    Personagem_AtualizarPosicao(&jogador,keys, bit_map_Fase1);
+                    al_draw_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
+                    jogador.frames.currentFrame, 0, jogador.frames.w_Frame,
+                    jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0); 
+                }
+                //code
+                if(jogador.Acao ==  Attack || times_of_attack_player > 0){
+                    Personagem_AtualizarPosicao(&jogador,keys,bit_map_Fase1);
+                    al_draw_bitmap_region(jogador.imagem_ataque[jogador.CurrentDir],
+                    jogador.frames.currentFrame, 0, jogador.frames.w_Frame,
+                    jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0);
+                    times_of_attack_player--; 
+                    //printf("%d  - %d\n", times_of_attack_player, jogador.frames.currentFrame);
+                }
+                else{    
+                    al_draw_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
+                    jogador.frames.currentFrame, 0, jogador.frames.w_Frame,
+                    jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0); 
+                }
+                //MudarFrame_Personagem(&jogador,128);  
                         
                 bool hitted = false;
                 curr_posicao_plyr = jogador.pos;
                 switch (Fase){
                     case Fase1:
                             
-                            
                             //Soldados Medievais
-                            for(int i = 0 ; i < n_soldados_medievais ; i++)
-                            {   // int timing = (al_get_time() - marcadorDeTempo) + timing;  
+                            for(int i = 0 ; i < n_soldados_medievais ; i++){  
+                                // int timing = (al_get_time() - marcadorDeTempo) + timing;  
                                 
                                 /// esse if verifica o intervalo para mudar de frame 
                                 // esse numero esquisito ai é o intervalo
@@ -486,8 +484,8 @@ int main(int argc, char *argv[]) {
                                 if((al_get_time() - marcadorDeTempo) > 0.03169 || marcadorDeTempo == 0){    
                                     //timing = 0;
                                     if(Soldado_medieval[i].dir == sm_direita && Soldado_medieval[i].action == sm_walk){
-                                        if(!Existe_Obstaculo(Soldado_medieval[i].pos.x +Soldado_medieval[i].pos.dx,
-                                            Soldado_medieval[i].pos.y,bit_map_Fase1)
+                                        if(!Existe_Obstaculo(Soldado_medieval[i].pos.x + Soldado_medieval[i].pos.dx + 32,
+                                            Soldado_medieval[i].pos.y, bit_map_Fase1)
                                              && !HoraDoAtaque(Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y, curr_posicao_plyr))
                                             {   printf("\nNAO EXISTE OBSTACULO A DIREITA \n");
                                                 Soldado_medieval[i].pos.x += Soldado_medieval[i].pos.dx;
@@ -496,9 +494,9 @@ int main(int argc, char *argv[]) {
                                                 Soldado_medieval[i].dir = sm_esquerda;
                                         } 
                                     }
-                                    if((Soldado_medieval[i].dir == sm_esquerda  && Soldado_medieval[i].action == sm_walk )){
+                                    if(Soldado_medieval[i].dir == sm_esquerda  && Soldado_medieval[i].action == sm_walk){
                                         if(!Existe_Obstaculo(Soldado_medieval[i].pos.x  - Soldado_medieval[i].pos.dx,
-                                            Soldado_medieval[i].pos.y,bit_map_Fase1) && 
+                                            Soldado_medieval[i].pos.y, bit_map_Fase1) && 
                                             (!HoraDoAtaque(Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y, curr_posicao_plyr)))
                                              {  printf("\nNAO EXISTE OBSTACULO A ESQUERDA\n");
                                                  Soldado_medieval[i].pos.x -= Soldado_medieval[i].pos.dx;
@@ -555,7 +553,7 @@ int main(int argc, char *argv[]) {
                                 Soldado_medieval[i].sprite.curr_X,Soldado_medieval[i].sprite.curr_Y,
                                 Soldado_medieval[i].sprite.Width, Soldado_medieval[i].sprite.Height,
                                 Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y,
-                                (Soldado_medieval[i].dir == sm_direita)? 0: 1);
+                                (Soldado_medieval[i].dir == sm_direita)? 0 : 1);
                             }
                         }  
                         break;
@@ -569,7 +567,7 @@ int main(int argc, char *argv[]) {
                                 if((al_get_time() - marcadorDeTempo) > 0.03169 || marcadorDeTempo == 0){    
                                     //timing = 0;
                                     if(Soldado_militar[i].dir == sm_direita && Soldado_militar[i].action == sm_walk){
-                                        if(!Existe_Obstaculo(Soldado_militar[i].pos.x +Soldado_militar[i].pos.dx,
+                                        if(!Existe_Obstaculo(Soldado_militar[i].pos.x + Soldado_militar[i].pos.dx + 32,
                                             Soldado_militar[i].pos.y,bit_map_Fase2)
                                              && !HoraDoAtaque(Soldado_militar[i].pos.x, Soldado_militar[i].pos.y, curr_posicao_plyr))
                                             {   printf("\nNAO EXISTE OBSTACULO A DIREITA \n");
@@ -627,8 +625,6 @@ int main(int argc, char *argv[]) {
                                     
                                         //Soldado_militar[i].action= sm_death;  
                                     
-                                    
-                            
                                 //printf("EM Y_IMG %d X_IMG %d\n", Soldado_militar[i].sprite.curr_Y, Soldado_militar[i].sprite.curr_X);
                             }
                             if(Soldado_militar[i].hitted == false && Soldado_militar[i].action == sm_walk){
@@ -662,7 +658,7 @@ int main(int argc, char *argv[]) {
                         if((al_get_time() - marcadorDeTempo) > 0.03169 || marcadorDeTempo == 0){    
                             //timing = 0;
                             if(Inimigos_fase3[i].dir == sm_direita && Inimigos_fase3[i].action == sm_walk){
-                                if(!Existe_Obstaculo(Inimigos_fase3[i].pos.x +Inimigos_fase3[i].pos.dx,
+                                if(!Existe_Obstaculo(Inimigos_fase3[i].pos.x + Inimigos_fase3[i].pos.dx + 32,
                                     Inimigos_fase3[i].pos.y,bit_map_Fase3)
                                      && !HoraDoAtaque(Inimigos_fase3[i].pos.x, Inimigos_fase3[i].pos.y, curr_posicao_plyr))
                                     {   printf("\nNAO EXISTE OBSTACULO A DIREITA \n");
@@ -673,7 +669,7 @@ int main(int argc, char *argv[]) {
                                 } 
                             }
                             if((Inimigos_fase3[i].dir == sm_esquerda  && Inimigos_fase3[i].action == sm_walk )){
-                                if(!Existe_Obstaculo(Inimigos_fase3[i].pos.x  - Inimigos_fase3[i].pos.dx,
+                                if(!Existe_Obstaculo(Inimigos_fase3[i].pos.x - Inimigos_fase3[i].pos.dx,
                                     Inimigos_fase3[i].pos.y,bit_map_Fase1) && 
                                     (!HoraDoAtaque(Inimigos_fase3[i].pos.x, Inimigos_fase3[i].pos.y, curr_posicao_plyr)))
                                      {  printf("\nNAO EXISTE OBSTACULO A ESQUERDA\n");
