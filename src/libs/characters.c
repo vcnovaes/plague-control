@@ -15,16 +15,16 @@ void Criar_Personagem(PERSONAGEM * jogador, char * Imagens_Andar[4], char * Imag
     jogador->imagem_caminhar[East] = al_load_bitmap(Imagens_Andar[East]);
     jogador->imagem_caminhar[West] = al_load_bitmap(Imagens_Andar[West]);
     
-    jogador->imagem_ataque[North] = al_load_bitmap(Imagens_Andar[North]);
-    jogador->imagem_ataque[South] = al_load_bitmap(Imagens_Andar[South]);
-    jogador->imagem_ataque[East] = al_load_bitmap(Imagens_Andar[East]);
-    jogador->imagem_ataque[West] = al_load_bitmap(Imagens_Andar[West]);
+    jogador->imagem_ataque[North] = al_load_bitmap(Imagens_Ataque[North]);
+    jogador->imagem_ataque[South] = al_load_bitmap(Imagens_Ataque[South]);
+    jogador->imagem_ataque[East] = al_load_bitmap(Imagens_Ataque[East]);
+    jogador->imagem_ataque[West] = al_load_bitmap(Imagens_Ataque[West]);
     
 
     for(int i =0 ; i < 4; i++)
-    if(al_load_bitmap(Imagens_Andar[West] )!= NULL){
-        printf("%s\n", Imagens_Andar[i]);
-    }
+        if(al_load_bitmap(Imagens_Andar[West] )!= NULL){
+            printf("%s\n", Imagens_Andar[i]);
+        }
 
     jogador->pos.x = x_inicial;
     jogador->pos.y = y_inicial;
@@ -72,7 +72,7 @@ void Personagem_AtualizarPosicao(PERSONAGEM *personagem, bool keys[4], int map[2
                 personagem->pos.x += keys[RIGHT]*(personagem->pos.dx);
     
     }
-    printf("Current position  : x   :  %d   y  : %d\n", personagem->pos.x, personagem->pos.y);    
+    printf("Current position  : x   :  %d   y  : %d\n", personagem->pos.x, personagem->pos.y);
     MudarFrame_Personagem(personagem,64);   
 
 }
@@ -181,7 +181,7 @@ void MudarFrame_Personagem(PERSONAGEM * personagem, int IMG_total_W){
 }
 bool HoraDoAtaque(int pos_inimigo_x, int pos_inimigo_y, POSICAO pos_jogador){
     bool ataque = true;
-    if(!Esta_nas_proximidades(pos_inimigo_x,pos_inimigo_y,pos_jogador.x,pos_jogador.y, 50)){
+    if(!Esta_nas_proximidades(pos_inimigo_x,pos_inimigo_y,pos_jogador.x,pos_jogador.y, 32)){
         ataque = false;
     }
 
@@ -239,5 +239,53 @@ void Criar_InimigosFase3(SOLDADO_MEDIEVAL **InimigosF3, int n_inimigos, char *Im
             (*InimigosF3)[i].hitted  = false;
         }
 
+
+}
+
+void Criar_BossFase2(SOLDADO_MEDIEVAL *Boss, char *Imagens_walk[4],char  * Imagens_attack[4], int map[21][30]){
+    
+   // Boss = (SOLDADO_MEDIEVAL *)malloc(sizeof(SOLDADO_MEDIEVAL));
+    Boss->sprite.Imagem_walk_NORTH = al_load_bitmap(Imagens_walk[North]);
+    Boss->sprite.Imagem_walk_SOUTH = al_load_bitmap(Imagens_walk[South]);
+    Boss->sprite.Imagem_walk_EAST = al_load_bitmap(Imagens_walk[East]);
+    Boss->sprite.Imagem_walk_WEST = al_load_bitmap(Imagens_walk[West]);
+
+
+    Boss->sprite.Imagem_attack_NORTH = al_load_bitmap(Imagens_attack[North]);
+    Boss->sprite.Imagem_attack_SOUTH = al_load_bitmap(Imagens_attack[South]);
+    Boss->sprite.Imagem_attack_EAST = al_load_bitmap(Imagens_attack[East]);
+    Boss->sprite.Imagem_attack_WEST = al_load_bitmap(Imagens_attack[West]);
+
+    Boss->sprite.Height = 26;
+    Boss->sprite.Width = 16;
+    Boss->sprite.curr_X = 0;
+    Boss->sprite.curr_Y = 0;
+    
+    Boss->vida = 25;
+    Boss->dir = sm_esquerda;
+    Boss->action = sm_walk; 
+    Boss->pos.y = (Display_HEIGHT) /2;
+    Boss->hitted = false;
+    Boss->pos.x = (Display_WIDTH) - 80;
+}
+void Criar_BossFase3(SOLDADO_MEDIEVAL *Presidente, char *Imagens_walk[2], char *Imagens_attack[2],int map[21][30]){
+
+    Presidente->sprite.Imagem_walk_EAST = al_load_bitmap(Imagens_walk[0]);
+    Presidente->sprite.Imagem_walk_WEST = al_load_bitmap(Imagens_walk[1]);
+
+    Presidente->sprite.Imagem_attack_EAST = al_load_bitmap(Imagens_attack[0]);
+    Presidente->sprite.Imagem_attack_EAST = al_load_bitmap(Imagens_attack[1]);
+
+    Presidente->sprite.Height = 32;
+    Presidente->sprite.Width = 32;
+    Presidente->sprite.curr_X = 0;
+    Presidente->sprite.curr_Y = 0;
+
+    Presidente->vida = 30;
+    Presidente->dir = sm_esquerda;
+    Presidente->action = sm_walk;
+    Presidente->pos.y = 70;
+    Presidente->pos.x = Display_WIDTH/2;
+    Presidente->hitted = false; 
 
 }

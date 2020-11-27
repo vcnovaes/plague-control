@@ -2,24 +2,25 @@
 #include <stdio.h>
 
 bool Existe_Obstaculo(int pos_x, int pos_y, int Mapas[21][30]){    
-    int col = (pos_x) / 32;
-    int lin = (pos_y) / 32;
-    bool on_limit_of_map = false;
-    printf("Col : %d , linha : %d  %s\n", col, lin, Mapas[lin][col]?"OBSTACULO":"LIVRE");
+    int col = ((pos_x) / 32) + 1;
+    int lin = ((pos_y) / 32) + 1;
+
+    bool ta_na_bordinha = false;
+  //  printf("Col : %d , linha : %d  %s\n", col, lin, Mapas[lin][col]?"OBSTACULO":"LIVRE");
     if(pos_x >= Display_WIDTH - 100){
-        on_limit_of_map = true;
+        ta_na_bordinha = true;
     }
     if(pos_y >= Display_HEIGHT - 100){
-        on_limit_of_map = true;
-    }
+        ta_na_bordinha = true;
+    } 
     if(pos_x <= 25){
-        on_limit_of_map = true;
+        ta_na_bordinha = true;
     }
     if(pos_y <= 25){
-        on_limit_of_map = true;
+        ta_na_bordinha = true;
     }
 
-    return (Mapas[lin][col] || on_limit_of_map);
+    return (Mapas[lin][col] || ta_na_bordinha);
 }
 
 bool Esta_nas_proximidades(int pos_x, int pos_y, int ply_x, int ply_y, int range){
