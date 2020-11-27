@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include "controles.h"
 
+
 void Criar_Personagem(PERSONAGEM * jogador, char * Imagens_Andar[4], char * Imagens_Ataque[4],
  int x_inicial, int y_inicial){
     
@@ -47,81 +48,37 @@ void Personagem_AtualizarPosicao(PERSONAGEM *personagem, bool keys[4], int map[2
   //  if(!map[personagem->quadranteI][personagem->quadranteJ]){    
     /// tentando criar os obstaculos no mapa
     if(keys[UP]){
-        if(personagem->loc.i > 0){
-            if(personagem->pos.y <= (personagem->loc.i) *32){
-                personagem->loc.i --;
-            }
-        }
-        if(personagem->pos.y > 0 && map[personagem->loc.i][personagem->loc.j])
+        
+        if(!Existe_Obstaculo( personagem->pos.x,personagem->pos.y - personagem->pos.dy,map)
+            && (personagem->pos.y -  personagem->pos.dy)  > 25 )
             personagem->pos.y -= keys[UP]*(personagem->pos.dy);
 
     }
     if(keys[DOWN]){
-        if(personagem->loc.i < 21){
-            if(personagem->pos.y > (personagem->loc.i) *32){
-                personagem->loc.i ++;
-            }
-        }
-
-        if(personagem->pos.y < Display_HEIGHT - 30 && !map[personagem->loc.i][personagem->loc.j] )
+        if(!Existe_Obstaculo(personagem->pos.x,personagem->pos.y + personagem->pos.dy,map)
+             && (personagem->pos.y +  personagem->pos.dy)  < Display_HEIGHT+ 25){
             personagem->pos.y += keys[DOWN]*(personagem->pos.dy);    
+        }
     
     }
     if(keys[LEFT]){
-        if(personagem->pos.x  > 0)
-            personagem->pos.x -= keys[LEFT]*(personagem->pos.dx);
+         if(!Existe_Obstaculo( personagem->pos.x - personagem->pos.dx,personagem->pos.y ,map)
+            && (personagem->pos.x -  personagem->pos.dx)  > 25 )
+                personagem->pos.x -= keys[LEFT]*(personagem->pos.dx);
     }
     if(keys[RIGHT]){
-        if(personagem->pos.x < Display_WIDTH -30) 
-            personagem->pos.x += keys[RIGHT]*(personagem->pos.dx);
+        if(!Existe_Obstaculo( personagem->pos.x + personagem->pos.dx,personagem->pos.y ,map)
+            && (personagem->pos.x +  personagem->pos.dx)  < Display_WIDTH + 25)
+                personagem->pos.x += keys[RIGHT]*(personagem->pos.dx);
     
     }
-
-
-   /*     if(keys[LEFT] || keys[DOWN]){
-            if(!((personagem->pos.x < (personagem->quadranteI +1)*32
-                && personagem->pos.x > personagem->quadranteI*32) ||
-                (personagem->pos.y < (personagem->quadranteJ +1)*32
-                && personagem->pos.y > personagem->quadranteJ*32))){
-                if(!(personagem->pos.x < (personagem->quadranteI +1)*32
-                    && personagem->pos.x > personagem->quadranteI*32)){ 
-                        //if(personagem->quadranteI < 21)
-                          //  personagem->quadranteI++;
-                    }
-                    if(!((personagem->pos.y < (personagem->quadranteJ +1)*32
-                    && personagem->pos.y > personagem->quadranteJ*32))) 
-                    {
-                    if(personagem->quadranteJ <30)
-                          personagem->quadranteJ++;
-                    }
-                }
-            }
-        if(keys[UP] || keys[DOWN]){
-            if(!((personagem->pos.x < (personagem->quadranteI +1)*32
-                && personagem->pos.x > personagem->quadranteI*32) ||
-                (personagem->pos.y < (personagem->quadranteJ +1)*32
-                && personagem->pos.y > personagem->quadranteJ*32))){
-                if(!(personagem->pos.x < (personagem->quadranteI +1)*32
-                    && personagem->pos.x > personagem->quadranteI*32)){ 
-                      if(personagem->quadranteI > 0)
-                            personagem->quadranteI--;
-                    }
-                    if(!((personagem->pos.y < (personagem->quadranteJ +1)*32
-                    && personagem->pos.y > personagem->quadranteJ*32))) 
-                    {
-                    if(personagem->quadranteJ > 0 )
-                            personagem->quadranteJ--;
-                    }
-                }
-        }*/
-        printf("ESTA EM %d   x  %d\n", personagem->loc.i,personagem->loc.j);
-        //for(int i  = 0; i < 10000; i++){}
-        MudarFrame_Personagem(personagem,64);   
+    printf("Current position  : x   :  %d   y  : %d\n", personagem->pos.x, personagem->pos.y);    
+    MudarFrame_Personagem(personagem,64);   
 
 }
 
 void Criar_Soldado_Medieval(SOLDADO_MEDIEVAL **Soldado_medieval, int n_soldados_medievais,
-                            char * IMG_Soldado_Medieval[3]){
+                            char * IMG_Soldado_Medieval[3], int map[21][30]){
     (*Soldado_medieval) = (SOLDADO_MEDIEVAL * )malloc(n_soldados_medievais*sizeof(SOLDADO_MEDIEVAL));
     if(Soldado_medieval ==NULL)exit(-1);
     for(int i  = 0 ;  i  <n_soldados_medievais; i++)
@@ -138,17 +95,75 @@ void Criar_Soldado_Medieval(SOLDADO_MEDIEVAL **Soldado_medieval, int n_soldados_
             (*Soldado_medieval)[i].sprite.n_linhas    = 4;
             (*Soldado_medieval)[i].sprite.curr_X = 0;
             (*Soldado_medieval)[i].sprite.curr_Y = 0;
-            (*Soldado_medieval)[i].pos.x = (rand() % (Display_WIDTH - 0 + 1)) + 0;
-            (*Soldado_medieval)[i].pos.y = (rand() % (Display_HEIGHT + 1));
+            (*Soldado_medieval)[i].pos.x = (rand() % (Display_WIDTH  + 1)) + 0;
+            (*Soldado_medieval)[i].pos.y = (rand() % (Display_HEIGHT  - 150));
+            //Esse loop assegura a posição inicial do soldado não ser um obstaculo
+            
+            
             (*Soldado_medieval)[i].pos.dx = 3;
             (*Soldado_medieval)[i].pos.dy = 3;
-            (*Soldado_medieval)[i].dir = sm_direita;
+            while (Existe_Obstaculo((*Soldado_medieval)[i].pos.x + (*Soldado_medieval)[i].pos.dx,
+                    (*Soldado_medieval)[i].pos.y + (*Soldado_medieval)[i].pos.dy, map))
+            {
+                (*Soldado_medieval)[i].pos.x = (rand() % (Display_WIDTH  - 100 + 1)) + 0;
+                (*Soldado_medieval)[i].pos.y = (rand() % (Display_HEIGHT  - 150));
+            
+            }
+            (*Soldado_medieval)[i].dir = sm_esquerda;
             (*Soldado_medieval)[i].action = sm_walk;
             (*Soldado_medieval)[i].vida = 4;
             (*Soldado_medieval)[i].hitted  = false;
         }
 
 }
+
+void Criar_Soldado_Militar(SOLDADO_MEDIEVAL **Soldado_militar, int n_soldados_militares,
+                            char * Imagens_RUN[4], char * Imagens_ATTACK[4], int map[21][30]){
+    (*Soldado_militar) = (SOLDADO_MEDIEVAL * )malloc(n_soldados_militares*sizeof(SOLDADO_MEDIEVAL));
+    if(Soldado_militar ==NULL)exit(-1);
+    for(int i  = 0 ;  i  <n_soldados_militares; i++)
+            {   
+               // Carrega a imagem do soldado medieval,  i%3 é pq existem apenas tres
+        // modelos de soldados diferentes/ assim  o modelo gerado no display seria
+        // 'aleatório'
+            
+            (*Soldado_militar)[i].sprite.Imagem_walk_NORTH =  al_load_bitmap(Imagens_RUN[North]);
+            (*Soldado_militar)[i].sprite.Imagem_walk_SOUTH =  al_load_bitmap(Imagens_RUN[South]);
+            (*Soldado_militar)[i].sprite.Imagem_walk_WEST =  al_load_bitmap(Imagens_RUN[West]);
+            (*Soldado_militar)[i].sprite.Imagem_walk_EAST =  al_load_bitmap(Imagens_RUN[East]);
+            (*Soldado_militar)[i].sprite.Imagem_attack_NORTH =  al_load_bitmap(Imagens_RUN[North]);
+            (*Soldado_militar)[i].sprite.Imagem_attack_SOUTH =  al_load_bitmap(Imagens_RUN[South]);
+            (*Soldado_militar)[i].sprite.Imagem_attack_EAST =  al_load_bitmap(Imagens_RUN[East]);
+            (*Soldado_militar)[i].sprite.Imagem_attack_WEST =  al_load_bitmap(Imagens_RUN[West]);
+            //if((*Soldado_medieval)[i].sprite.Imagem == NULL) exit(-1);
+            (*Soldado_militar)[i].sprite.Height = 24;
+            (*Soldado_militar)[i].sprite.Width  = 16;
+            (*Soldado_militar)[i].sprite.n_colunas   = 1;
+            (*Soldado_militar)[i].sprite.n_linhas    = 1;
+            (*Soldado_militar)[i].sprite.curr_X = 0;
+            (*Soldado_militar)[i].sprite.curr_Y = 0;
+            (*Soldado_militar)[i].pos.x = (rand() % (Display_WIDTH  + 1)) + 0;
+            (*Soldado_militar)[i].pos.y = (rand() % (Display_HEIGHT  - 150));
+            //Esse loop assegura a posição inicial do soldado não ser um obstaculo
+            
+            
+            (*Soldado_militar)[i].pos.dx = 3;
+            (*Soldado_militar)[i].pos.dy = 3;
+            while (Existe_Obstaculo((*Soldado_militar)[i].pos.x + (*Soldado_militar)[i].pos.dx,
+                    (*Soldado_militar)[i].pos.y + (*Soldado_militar)[i].pos.dy, map))
+            {
+                (*Soldado_militar)[i].pos.x = (rand() % (Display_WIDTH  - 100 + 1)) + 0;
+                (*Soldado_militar)[i].pos.y = (rand() % (Display_HEIGHT  - 150));
+            
+            }
+            (*Soldado_militar)[i].dir = sm_esquerda;
+            (*Soldado_militar)[i].action = sm_walk;
+            (*Soldado_militar)[i].vida = 4;
+            (*Soldado_militar)[i].hitted  = false;
+        }
+
+}
+
 
 
 
@@ -163,4 +178,12 @@ void MudarFrame_Personagem(PERSONAGEM * personagem, int IMG_total_W){
         personagem->frames.currentFrame = 0;
     }
     // printf("%d\n",personagem->frames.currentFrame);
+}
+bool HoraDoAtaque(int pos_inimigo_x, int pos_inimigo_y, POSICAO pos_jogador){
+    bool ataque = true;
+    if(!Esta_nas_proximidades(pos_inimigo_x,pos_inimigo_y,pos_jogador.x,pos_jogador.y, 50)){
+        ataque = false;
+    }
+
+    return ataque;
 }

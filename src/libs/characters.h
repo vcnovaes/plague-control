@@ -13,7 +13,16 @@
 //const int velocidade_padrao = 3;
 
 typedef struct Sprite{
-    ALLEGRO_BITMAP * Imagem;
+    ALLEGRO_BITMAP * Imagem; 
+    ALLEGRO_BITMAP * Imagem_attack_NORTH;
+    ALLEGRO_BITMAP * Imagem_attack_SOUTH;
+    ALLEGRO_BITMAP * Imagem_attack_EAST;
+    ALLEGRO_BITMAP * Imagem_attack_WEST;
+    ALLEGRO_BITMAP * Imagem_walk_NORTH;
+    ALLEGRO_BITMAP * Imagem_walk_SOUTH;
+    ALLEGRO_BITMAP * Imagem_walk_EAST;
+    ALLEGRO_BITMAP * Imagem_walk_WEST;
+
     int curr_X;   // posicao de leitura na imagem na coordenada x
     int curr_Y;     // posicao de leitura na imagem na coordenada y
     int Height; // Altura de cada frame
@@ -94,7 +103,7 @@ void Personagem_SetFrames(PERSONAGEM * personagem, int numero_de_frames, int wid
 void Personagem_AtualizarPosicao(PERSONAGEM *personagem, bool keys[4], int map[21][30]);
 
 void Criar_Soldado_Medieval(SOLDADO_MEDIEVAL **Soldado_medieval, int n_soldados_medievais,
-                            char * IMG_Soldado_Medieval[3]);
+                            char * IMG_Soldado_Medieval[3], int map[21][30]);
 /*
 char * IMG_Soldado_Medieval[3]  ={
     "src/Graficos/Pixel_Art_Gamejam/Fase 1/Soldier/Knight Character Pack by RgsDev/Knight 1/knight 1 sword 1.png",
@@ -103,4 +112,9 @@ char * IMG_Soldado_Medieval[3]  ={
     };
     */
 void MudarFrame_Personagem(PERSONAGEM  * personagem , int IMG_total_W);
+// Verfica se o inimigo deve atacar
+bool HoraDoAtaque(int pos_inimigo_x, int pos_inimigo_y, POSICAO jogador);
+void Criar_Soldado_Militar(SOLDADO_MEDIEVAL **Soldado_militar, int n_soldados_militares,
+                            char * Imagens_RUN[4], char * Imagens_ATTACK[4], int map[21][30]);
+
 #endif
