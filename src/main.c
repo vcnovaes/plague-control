@@ -38,16 +38,16 @@ char * IMG_Soldado_Medieval[3]  ={
     "Graficos/Pixel_Art_Gamejam/Fase 1/Soldier/Knight Character Pack by RgsDev/Knight 1/knight 1 axe.png"
     };
 char *IMG_Soldado_Militares_RUN[4] = {
-    "Graficos/Pixel_Art_Gamejam/Fase 2/Soldado_Movements/RUN/SMS_Soldier_RUN_NORTH_strip4.png",
-    "Graficos/Pixel_Art_Gamejam/Fase 2/Soldado_Movements/RUN/SMS_Soldier_RUN_SOUTH_strip4.png",
-    "Graficos/Pixel_Art_Gamejam/Fase 2/Soldado_Movements/RUN/SMS_Soldier_RUN_WEST_strip4.png",
-    "Graficos/Pixel_Art_Gamejam/Fase 2/Soldado_Movements/RUN/SMS_Soldier_RUN_EAST_strip4.png"
+    "Graficos/Pixel_Art_Gamejam/Fase 2/Soldado_Movements/WALK/SMS_Soldier_WALK_NORTH_strip4.png",
+    "Graficos/Pixel_Art_Gamejam/Fase 2/Soldado_Movements/WALK/SMS_Soldier_WALK_SOUTH_strip4.png",
+    "Graficos/Pixel_Art_Gamejam/Fase 2/Soldado_Movements/WALK/SMS_Soldier_WALK_WEST_strip4.png",
+    "Graficos/Pixel_Art_Gamejam/Fase 2/Soldado_Movements/WALK/SMS_Soldier_WALK_EAST_strip4.png"
 };
 char *IMG_Soldado_Militares_Attack[4] = {
-    "Graficos/Pixel_Art_Gamejam/Fase 2/Soldado_Movements/ATTACK PUNCH single frames/NES_Soldier_ATTACKPUNCH_NORTH.png",
-    "Graficos/Pixel_Art_Gamejam/Fase 2/Soldado_Movements/ATTACK PUNCH single frames/NES_Soldier_ATTACKPUNCH_SOUTH.png",
-    "Graficos/Pixel_Art_Gamejam/Fase 2/Soldado_Movements/ATTACK PUNCH single frames/NES_Soldier_ATTACKPUNCH_WEST.png",
-    "Graficos/Pixel_Art_Gamejam/Fase 2/Soldado_Movements/ATTACK PUNCH single frames/NES_Soldier_ATTACKPUNCH_EAST.png"
+    "Graficos/Pixel_Art_Gamejam/Fase 2/Soldado_Movements/ATTACK KICK single frames/NES_Soldier_ATTACKKICK_NORTH.png",
+    "Graficos/Pixel_Art_Gamejam/Fase 2/Soldado_Movements/ATTACK KICK single frames/NES_Soldier_ATTACKKICK_SOUTH.png",
+    "Graficos/Pixel_Art_Gamejam/Fase 2/Soldado_Movements/ATTACK KICK single frames/NES_Soldier_ATTACKKICK_WEST.png",
+    "Graficos/Pixel_Art_Gamejam/Fase 2/Soldado_Movements/ATTACK KICK single frames/NES_Soldier_ATTACKKICK_EAST.png"
 };
 // para cada imagem ---> height = 52  
 ////////            ---> width = 196
@@ -587,7 +587,7 @@ int main(int argc, char *argv[]) {
 
                                     Soldado_militar[i].sprite.curr_Y = Soldado_militar[i].sprite.Height * Soldado_militar[i].action;
                                     if((Soldado_militar[i].sprite.curr_X + Soldado_militar[i].sprite.Width )< 64
-                                        && Soldado_militar[i].action != sm_death){
+                                        && Soldado_militar[i].action == sm_walk){
                                         Soldado_militar[i].sprite.curr_X += Soldado_militar[i].sprite.Width;
                                     }else{
                                     Soldado_militar[i].sprite.curr_X  = 0;
@@ -605,7 +605,7 @@ int main(int argc, char *argv[]) {
                                         times_of_attack_enemy += 1;
                                     }
                                     /// isso meio que  ta mensurando o tempo de ataque
-                                    if(times_of_attack_enemy > 20){
+                                    if(times_of_attack_enemy > 30 && Soldado_militar[i].action == sm_attack){
                                         Soldado_militar[i].action = sm_walk;
                                         times_of_attack_enemy  = 0;
                                     }
@@ -614,8 +614,8 @@ int main(int argc, char *argv[]) {
                                         Soldado_militar[i].action = sm_death;
                                     }
                                     if(Soldado_militar[i].action == sm_death){
-                                        Soldado_militar[i].sprite.curr_Y = 3;
-                                        Soldado_militar[i].sprite.curr_X = 192;
+                                        Soldado_militar[i].sprite.curr_Y = 0;
+                                        Soldado_militar[i].sprite.curr_X = 0;
                                     }
                                     
                                         //Soldado_militar[i].action= sm_death;  
@@ -624,7 +624,7 @@ int main(int argc, char *argv[]) {
                             
                                 //printf("EM Y_IMG %d X_IMG %d\n", Soldado_militar[i].sprite.curr_Y, Soldado_militar[i].sprite.curr_X);
                             }
-                            if(Soldado_militar[i].hitted == false){
+                            if(Soldado_militar[i].hitted == false && Soldado_militar[i].action == sm_walk){
                                // printf("\n\tPOSICAO JOGADOR : %d,%d \n\t POSICAO SOLDADO: %d, %d", 
                                 //curr_posicao_plyr.x, curr_posicao_plyr.y, Soldado_militar[i].pos.x, Soldado_militar[i].pos.y);
                                 al_draw_bitmap_region(Soldado_militar[i].sprite.Imagem_walk_EAST,
@@ -632,6 +632,13 @@ int main(int argc, char *argv[]) {
                                 Soldado_militar[i].sprite.Width, Soldado_militar[i].sprite.Height,
                                 Soldado_militar[i].pos.x, Soldado_militar[i].pos.y,
                                 (Soldado_militar[i].dir == sm_direita)? 1: 0);
+                            }else if((Soldado_militar[i].action == sm_attack && times_of_attack_enemy )){
+                                al_draw_bitmap_region(Soldado_militar[i].sprite.Imagem_attack_EAST,
+                                Soldado_militar[i].sprite.curr_X = 0,Soldado_militar[i].sprite.curr_Y = 0,
+                                Soldado_militar[i].sprite.Width, Soldado_militar[i].sprite.Height,
+                                Soldado_militar[i].pos.x, Soldado_militar[i].pos.y,
+                                (Soldado_militar[i].dir == sm_direita)? 1: 0);
+                                //al_rest(13.0);
                             }
                         } 
 

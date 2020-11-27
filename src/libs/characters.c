@@ -131,10 +131,10 @@ void Criar_Soldado_Militar(SOLDADO_MEDIEVAL **Soldado_militar, int n_soldados_mi
             (*Soldado_militar)[i].sprite.Imagem_walk_SOUTH =  al_load_bitmap(Imagens_RUN[South]);
             (*Soldado_militar)[i].sprite.Imagem_walk_WEST =  al_load_bitmap(Imagens_RUN[West]);
             (*Soldado_militar)[i].sprite.Imagem_walk_EAST =  al_load_bitmap(Imagens_RUN[East]);
-            (*Soldado_militar)[i].sprite.Imagem_attack_NORTH =  al_load_bitmap(Imagens_RUN[North]);
-            (*Soldado_militar)[i].sprite.Imagem_attack_SOUTH =  al_load_bitmap(Imagens_RUN[South]);
-            (*Soldado_militar)[i].sprite.Imagem_attack_EAST =  al_load_bitmap(Imagens_RUN[East]);
-            (*Soldado_militar)[i].sprite.Imagem_attack_WEST =  al_load_bitmap(Imagens_RUN[West]);
+            (*Soldado_militar)[i].sprite.Imagem_attack_NORTH =  al_load_bitmap(Imagens_ATTACK[North]);
+            (*Soldado_militar)[i].sprite.Imagem_attack_SOUTH =  al_load_bitmap(Imagens_ATTACK[South]);
+            (*Soldado_militar)[i].sprite.Imagem_attack_EAST =  al_load_bitmap(Imagens_ATTACK[East]);
+            (*Soldado_militar)[i].sprite.Imagem_attack_WEST =  al_load_bitmap(Imagens_ATTACK[West]);
             //if((*Soldado_medieval)[i].sprite.Imagem == NULL) exit(-1);
             (*Soldado_militar)[i].sprite.Height = 24;
             (*Soldado_militar)[i].sprite.Width  = 16;
