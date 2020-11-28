@@ -237,7 +237,7 @@ int BitMaps[3][21][30] = {
 
 PERSONAGEM jogador;
 
-int n_soldados_medievais = 2;  // numero de soldados medievais
+int n_soldados_medievais = 5;  // numero de soldados medievais
 int n_soldados_militares = 1;
 int n_inimigos = 30;
 /// A função cria os soldados medievais, configurndo suas structs;
@@ -365,7 +365,7 @@ int main(int argc, char *argv[]) {
     al_attach_sample_instance_to_mixer(somFundoInstance, al_get_default_mixer());
 
     //Colocando a musica para tocar
-    //al_play_sample_instance(somFundoInstance);
+    al_play_sample_instance(somFundoInstance);
 
 
     //Inicializando o estado atual como o menu
@@ -463,31 +463,31 @@ int main(int argc, char *argv[]) {
             if(entrouFase1 == true){ // mudei aqui false->true
                 al_draw_bitmap(telasAdicionais[0], 0, 0, 0);
                 al_flip_display();
-                al_rest(5.0);
+                al_rest(7.0);
                 entrouFase1 = true;
                 Fase = Fase1;
             }
             if(entrouFase2 == true && passouFase1 == false){// mudei aqui false->true e true->false
                 al_draw_bitmap(telasAdicionais[1], 0, 0, 0);
                 al_flip_display();
-                al_rest(5.0);
+                al_rest(7.0);
                 al_draw_bitmap(telasAdicionais[2], 0, 0, 0);
                 al_flip_display();
-                al_rest(5.0);
+                al_rest(7.0);
                 entrouFase2 = true;
                 Fase = Fase2;
             }
             if(entrouFase3 == false && passouFase2 == false){// mudei aqui true->false/ segundo 
                 al_draw_bitmap(telasAdicionais[3], 0, 0, 0);
                 al_flip_display();
-                al_rest(5.0);
+                al_rest(7.0);
                 entrouFase3 = true;
                 Fase = Fase3;
             }
             if(passouFase3 == true){ //Ganhou o jogo
-                al_draw_bitmap(telasAdicionais[3], 0, 0, 0);
+                al_draw_bitmap(telasAdicionais[4], 0, 0, 0);
                 al_flip_display();
-                al_rest(5.0);
+                al_rest(7.0);
                 estado_atual = CREDITOS; //se acabar o jogo, mostra os creditos
             }
             al_draw_bitmap(Mapas[Fase], 0, 0, 0);
@@ -675,7 +675,7 @@ int main(int argc, char *argv[]) {
                                     times_of_attack_enemy += 1;
                                     if(Esta_nas_proximidades(jogador.pos.x,jogador.pos.y,Soldado_medieval[i].pos.x,Soldado_medieval[i].pos.y,16)){
                                         vzs_atingido++;
-                                        if(vzs_atingido > 20){
+                                        if(vzs_atingido > 100){
                                             jogador.vida--;
                                             vzs_atingido = 0;
                                             al_play_sample(efeito_espada, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
@@ -692,7 +692,7 @@ int main(int argc, char *argv[]) {
                                     Soldado_medieval[i].action = sm_walk;
                                 }
                                 // isso meio que  ta mensurando o tempo de ataque
-                                if(times_of_attack_enemy > 20){
+                                if(times_of_attack_enemy > 100){
                                     printf("\n%d \n",times_of_attack_enemy);
                                     printf("\nO ataque parou\n");
                                     Soldado_medieval[i].action = sm_walk;
@@ -839,7 +839,10 @@ int main(int argc, char *argv[]) {
                                 // int timing = (al_get_time() - marcadorDeTempo) + timing;  
                                 // esse if verifica o intervalo para mudar de frame 
                                 // esse numero esquisito ai é o intervalo
+<<<<<<< HEAD
                                 //al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
+=======
+>>>>>>> 0fb9f2ac63be590e4018a81cbffeb373590df84c
                                 hitted = false;
                                 if(jogador.Acao == Attack && Esta_nas_proximidades(Soldado_militar[i].pos.x,
                                  Soldado_militar[i].pos.y, jogador.pos.x, jogador.pos.y, 23)){
@@ -967,7 +970,6 @@ int main(int argc, char *argv[]) {
                             // aqui
                             if(!qtd_vivo){
                                 //libera boss
-                                al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
                                 hitted = false;
                                 if(jogador.Acao == Attack && Esta_nas_proximidades(Boss_fase2.pos.x, Boss_fase2.pos.y, jogador.pos.x, jogador.pos.y, 20)){
                                     hitted = true;
@@ -1286,5 +1288,7 @@ int main(int argc, char *argv[]) {
     al_destroy_font(fonte_creditos);
     al_destroy_sample(somFundo);
     al_destroy_bitmap(background);
+    al_destroy_sample(efeito_espada);
+    al_destroy_sample(efeito_soco);
     return 0;
 }
