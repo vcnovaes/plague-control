@@ -339,11 +339,15 @@ int main(int argc, char *argv[]) {
     Mapas[2] = al_load_bitmap("Graficos/Mapas/Fase 3/mapa_fase3_final.png");
     fonte_start = al_load_font("Graficos/Menu Inicial/fonte_menu_inicial.ttf", 36, 0);
     //if(fonte_start == NULL)exit(-1);
+
+
     fonte_logo = al_load_font("Graficos/Menu Inicial/Base 02.ttf", 88, 0);
     fonte_creditos = al_load_font("Graficos/Menu Inicial/fonte_menu_inicial.ttf", 30, 0);
     somFundo = al_load_sample("Graficos/Menu Inicial/NDKG_CreepyAtmosphere_Reg.wav");
-    efeito_soco = al_load_sample("Graficos/Efeitos Sonoros/efeito_murro.mp3");
-    efeito_espada = al_load_sample("Graficos/Efeitos Sonoros/efeito_espada.mp3");
+    efeito_soco = al_load_sample("Graficos/Efeitos Sonoros/efeito_murro.wav");
+
+    efeito_espada = al_load_sample("Graficos/Efeitos Sonoros/efeito_espada.wav");
+
     background = al_load_bitmap("Graficos/Menu Inicial/menu_inicial_background.jpeg");
     tela_game_over = al_load_bitmap("Graficos/Menu Inicial/game_over.jpeg");
     tela_creditos = al_load_bitmap("Graficos/Menu Inicial/tela_creditos.jpeg");
@@ -608,9 +612,11 @@ int main(int argc, char *argv[]) {
                         for(int i = 0 ; i < n_soldados_medievais ; i++){
                             //Se o soldado estiver no range, perde uma vida
                             hitted = false;
-                            if(jogador.Acao == Attack && Esta_nas_proximidades(Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y, jogador.pos.x, jogador.pos.y, 20)){
+                            if(jogador.Acao == Attack && 
+                            Esta_nas_proximidades(Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y,
+                             jogador.pos.x, jogador.pos.y, 25)){
                                 hitted = true;
-                                al_play_sample(efeito_espada, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
+                                al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
                                 /// Soldado_medieval[i].vida--;
                             }
 
@@ -672,6 +678,7 @@ int main(int argc, char *argv[]) {
                                         if(vzs_atingido > 20){
                                             jogador.vida--;
                                             vzs_atingido = 0;
+                                            al_play_sample(efeito_espada, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
                                             al_draw_tinted_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],al_map_rgb(135,0,0),
                                              jogador.frames.currentFrame, 0, jogador.frames.w_Frame, jogador.frames.h_Frame, jogador.pos.x,
                                               jogador.pos.y, 0);
@@ -725,6 +732,7 @@ int main(int argc, char *argv[]) {
                             hitted = false;
                             if(jogador.Acao == Attack && Esta_nas_proximidades(Boss_fase1.pos.x, Boss_fase1.pos.y, jogador.pos.x, 
                             jogador.pos.y, 20)){
+                                al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
                                 hitted = true;
                             }
                             vivo = true;
@@ -831,6 +839,7 @@ int main(int argc, char *argv[]) {
                                 // int timing = (al_get_time() - marcadorDeTempo) + timing;  
                                 // esse if verifica o intervalo para mudar de frame 
                                 // esse numero esquisito ai é o intervalo
+                                al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
                                 hitted = false;
                                 if(jogador.Acao == Attack && Esta_nas_proximidades(Soldado_militar[i].pos.x,
                                  Soldado_militar[i].pos.y, jogador.pos.x, jogador.pos.y, 23)){
@@ -957,6 +966,7 @@ int main(int argc, char *argv[]) {
                             }
                             if(!qtd_vivo){
                                 //libera boss
+                                al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
                                 hitted = false;
                                 if(jogador.Acao == Attack && Esta_nas_proximidades(Boss_fase2.pos.x, Boss_fase2.pos.y, jogador.pos.x, jogador.pos.y, 20)){
                                     hitted = true;
