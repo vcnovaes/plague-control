@@ -74,19 +74,12 @@ char *Boss_Attack_Fase3[2] = {
     "Graficos/Pixel_Art_Gamejam/Fase 3/Presidente/presidente_punch_left.png",
     "Graficos/Pixel_Art_Gamejam/Fase 3/Presidente/presidente_punch_right.png"   
 };
-/// NECESSARIO JUNTAR TODAS AS IMAGENS NUMA SÒ , COMO O SPRITE PADRÃO
-char *Boss_Walk_Left_Fase1[8] = {
-    "Graficos/Pixel_Art_Gamejam/Fase 1/PRIEST-WALK-LEFT/padre_walk_left_1.png",
-    "Graficos/Pixel_Art_Gamejam/Fase 1/PRIEST-WALK-LEFT/padre_walk_left_2.png",
-    "Graficos/Pixel_Art_Gamejam/Fase 1/PRIEST-WALK-LEFT/padre_walk_left_3.png",
-    "Graficos/Pixel_Art_Gamejam/Fase 1/PRIEST-WALK-LEFT/padre_walk_left_4.png",
-    "Graficos/Pixel_Art_Gamejam/Fase 1/PRIEST-WALK-LEFT/padre_walk_left_5.png",
-    "Graficos/Pixel_Art_Gamejam/Fase 1/PRIEST-WALK-LEFT/padre_walk_left_6.png",
-    "Graficos/Pixel_Art_Gamejam/Fase 1/PRIEST-WALK-LEFT/padre_walk_left_7.png",
-    "Graficos/Pixel_Art_Gamejam/Fase 1/PRIEST-WALK-LEFT/padre_walk_left_8.png",
+char *Boss_Walk_Fase1[1] = {
+    "Graficos/Pixel_Art_Gamejam/Fase 1/PRIEST-WALK-RIGHT/padre_walk_right.jpeg",
 };
-
-
+char *Boss_Attack_Fase1[1] = {
+    "Graficos/Pixel_Art_Gamejam/Fase 1/PRIEST-WALK-THUNDER/padre_attack_right_sprite.jpeg",
+};
 
 // para cada imagem ---> height = 52  
 ////////            ---> width = 196
@@ -300,6 +293,7 @@ int initAllegro() {
     Criar_Soldado_Militar(&Soldado_militar, n_soldados_militares,
                             IMG_Soldado_Militares_RUN, IMG_Soldado_Militares_Attack, bit_map_Fase2);
     Criar_InimigosFase3(&Inimigos_fase3,n_inimigos,IMG_inimigos_fase3,bit_map_Fase3);
+    Criar_BossFase1(&Boss_fase1, Boss_Walk_Fase1, Boss_Attack_Fase1, bit_map_Fase1);
     Criar_BossFase2(&Boss_fase2,Boss_Walk_Fase2,Boss_Attack_Fase2,bit_map_Fase2);
     Criar_BossFase3(&Presidente,Boss_Walk_Fase3,Boss_Attack_Fase3,bit_map_Fase3);
     return 0;
