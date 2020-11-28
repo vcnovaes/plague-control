@@ -290,24 +290,23 @@ void Criar_BossFase3(SOLDADO_MEDIEVAL *Presidente, char *Imagens_walk[2], char *
 
 }
 
-//Feito por Edson (em desenvolvimento)
-/*void Criar_BossFase1(SOLDADO_MEDIEVAL *Padre, char *Imagens_walk[2], char *Imagens_attack[2],int map[21][30]){
+void Criar_BossFase1(SOLDADO_MEDIEVAL *Boss_fase1, char *Imagens_walk[1], char *Imagens_attack[1],int map[21][30]){
 
-    Presidente->sprite.Imagem_walk_EAST = al_load_bitmap(Imagens_walk[0]);
-    Presidente->sprite.Imagem_walk_WEST = al_load_bitmap(Imagens_walk[1]);
+    Boss_fase1->sprite.Imagem_walk_EAST = al_load_bitmap(Imagens_walk[0]);
+    Boss_fase1->sprite.Imagem_attack_EAST = al_load_bitmap(Imagens_attack[0]);
 
-    Presidente->sprite.Imagem_attack_EAST = al_load_bitmap(Imagens_attack[0]);
-    Presidente->sprite.Imagem_attack_EAST = al_load_bitmap(Imagens_attack[1]);
+    al_convert_mask_to_alpha(Boss_fase1->sprite.Imagem_walk_EAST, al_map_rgb(0, 0, 0));
+    al_convert_mask_to_alpha(Boss_fase1->sprite.Imagem_attack_EAST, al_map_rgb(0, 0, 0));
 
-    Presidente->sprite.Height = 32;
-    Presidente->sprite.Width = 32;
-    Presidente->sprite.curr_X = 0;
-    Presidente->sprite.curr_Y = 0;
+    Boss_fase1->sprite.Height = 32;
+    Boss_fase1->sprite.Width = 20;
+    Boss_fase1->sprite.curr_X = 0;
+    Boss_fase1->sprite.curr_Y = 0;
 
-    Presidente->vida = 30;
-    Presidente->dir = sm_esquerda;
-    Presidente->action = sm_walk;
-    Presidente->pos.y = 70;
-    Presidente->pos.x = Display_WIDTH/2;
-    Presidente->hitted = false; 
-}*/
+    Boss_fase1->vida = 70;
+    Boss_fase1->dir = sm_esquerda;
+    Boss_fase1->action = sm_walk;
+    Boss_fase1->pos.y = 64;
+    Boss_fase1->pos.x = 448;
+    Boss_fase1->hitted = false; 
+}
