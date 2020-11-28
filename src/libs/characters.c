@@ -313,12 +313,14 @@ void Criar_BossFase3(SOLDADO_MEDIEVAL *Presidente, char *Imagens_walk[2], char *
     Presidente->sprite.curr_X = 0;
     Presidente->sprite.curr_Y = 0;
 
-    Presidente->vida = 30;
-    Presidente->dir = sm_esquerda;
+    Presidente->vida = 150;
+    Presidente->dir = sm_direita;
     Presidente->action = sm_walk;
-    Presidente->pos.y = 70;
-    Presidente->pos.x = Display_WIDTH/2;
+    Presidente->pos.y = 64;
+    Presidente->pos.x = 64;
     Presidente->hitted = false; 
+    Presidente->pos.dx = 3;
+    Presidente->pos.dy = 3;
 
 }
 
