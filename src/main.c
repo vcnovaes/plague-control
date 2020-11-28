@@ -776,6 +776,19 @@ int main(int argc, char *argv[]) {
                                         }
                                         times_of_attack_enemy += 1;
                                     }
+                                    /*
+                                    if(Esta_nas_proximidades(Boss_fase1.pos.x, Boss_fase1.pos.y,
+                                             curr_posicao_plyr.x, curr_posicao_plyr.y, 100)){
+                                                 if(Boss_fase1.pos.y < curr_posicao_plyr.y){
+                                                     if(!Existe_Obstaculo(Boss_fase1.pos.y + Boss_fase1.pos.y,
+                                                            Boss_fase1.pos.y + Boss_fase1.pos.y,BitMaps[Fase])){
+                                                             Boss_fase1.pos.y += Boss_fase1.pos.dy;
+                                                            }
+                                                 }
+                                                
+
+
+                                             }*/
                                     //isso meio que  ta mensurando o tempo de ataque
                                     if(times_of_attack_enemy > 20 && Boss_fase1.action == sm_attack){
                                         printf("\nParou o ataque\n");
@@ -941,6 +954,9 @@ int main(int argc, char *argv[]) {
                                                                 (Soldado_militar[i].dir == sm_direita)? 1: 0);
                                         printf("\nJogaor posicao : (%d,%d)\n",curr_posicao_plyr.x, curr_posicao_plyr.y);
                                     }
+
+
+                                    
                                 }
                             }
                             if(!qtd_vivo){
@@ -990,6 +1006,7 @@ int main(int argc, char *argv[]) {
                                             Boss_fase2.dir = sm_direita;
                                         }
                                         else{
+                                            Boss_fase2.action = sm_walk;
                                             Boss_fase2.dir = sm_esquerda; // não recordo-me a direção original do sprite 
                                         }
                                         times_of_attack_enemy += 1;
@@ -1000,6 +1017,16 @@ int main(int argc, char *argv[]) {
                                         Boss_fase2.action = sm_walk;
                                         times_of_attack_enemy  = 0;
                                     }
+                                    /*
+                                    if(Esta_nas_proximidades(Boss_fase2.pos.x, Boss_fase2.pos.y,
+                                             curr_posicao_plyr.x, curr_posicao_plyr.y, 100)){
+                                                 if(Boss_fase2.pos.x < curr_posicao_plyr.x){
+                                                     if(!Existe_Obstaculo(Boss_fase2.pos.x + Boss_fase2.pos.x,
+                                                            Boss_fase2.pos.x + Boss_fase2.pos.x,BitMaps[Fase])){
+                                                             Boss_fase2.pos.x += Boss_fase2.pos.dx;
+                                                            }
+                                                 }
+                                    }*/
                                     //Soldado_militar[i].action= sm_death;  
                                     //printf("EM Y_IMG %d X_IMG %d\n", Soldado_militar[i].sprite.curr_Y, Soldado_militar[i].sprite.curr_X);
                                 }

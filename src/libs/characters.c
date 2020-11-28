@@ -282,8 +282,8 @@ void Criar_BossFase2(SOLDADO_MEDIEVAL *Boss, char *Imagens_walk[4],char  * Image
             //Esse loop assegura a posição inicial do soldado não ser um obstaculo
             
             
-    Boss->pos.dx = 5;
-    Boss->pos.dy = 5;
+    Boss->pos.dx = 2;
+    Boss->pos.dy = 2;
    /* while (Existe_Obstaculo(Boss->pos.x + Boss->pos.dx,
             Boss->pos.y + Boss->pos.dy, map))
     {
