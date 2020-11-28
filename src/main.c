@@ -74,7 +74,7 @@ char *Boss_Attack_Fase3[2] = {
     "Graficos/Pixel_Art_Gamejam/Fase 3/Presidente/presidente_punch_left.png",
     "Graficos/Pixel_Art_Gamejam/Fase 3/Presidente/presidente_punch_right.png"   
 };
-
+/// NECESSARIO JUNTAR TODAS AS IMAGENS NUMA SÒ , COMO O SPRITE PADRÃO
 char *Boss_Walk_Left_Fase1[8] = {
     "Graficos/Pixel_Art_Gamejam/Fase 1/PRIEST-WALK-LEFT/padre_walk_left_1.png",
     "Graficos/Pixel_Art_Gamejam/Fase 1/PRIEST-WALK-LEFT/padre_walk_left_2.png",
@@ -168,12 +168,88 @@ int bit_map_Fase3[21][30] = {
     0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
+// UNIFICANDO TODOS OS BITMAPS EM UM SÒ ARRAY FICA MAIS FACIL PASSAR COMO ARGUMENTO 
+
+int BitMaps[3][21][30] = {
+    {
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+},
+{
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+    0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+},
+{
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+}
+
+
+};
+
 
 PERSONAGEM jogador;
 
-int n_soldados_medievais = 15;  // numero de soldados medievais
-int n_soldados_militares = 20;
-int n_inimigos = 25;
+int n_soldados_medievais = 0;  // numero de soldados medievais
+int n_soldados_militares = 2;
+int n_inimigos = 2;
 /// A função cria os soldados medievais, configurndo suas structs;
 ///
 SOLDADO_MEDIEVAL  *Soldado_medieval = NULL, *Soldado_militar = NULL, *Inimigos_fase3 = NULL, 
@@ -224,6 +300,7 @@ int initAllegro() {
                             IMG_Soldado_Militares_RUN, IMG_Soldado_Militares_Attack, bit_map_Fase2);
     Criar_InimigosFase3(&Inimigos_fase3,n_inimigos,IMG_inimigos_fase3,bit_map_Fase3);
     Criar_BossFase2(&Boss_fase2,Boss_Walk_Fase2,Boss_Attack_Fase2,bit_map_Fase2);
+    Criar_BossFase3(&Presidente,Boss_Walk_Fase3,Boss_Attack_Fase3,bit_map_Fase3);
     return 0;
 }
 
@@ -492,7 +569,7 @@ int main(int argc, char *argv[]) {
                     // al_draw_bitmap(f1, 0, 0,0);
 
                     if(jogador.Acao ==  Walk){
-                        Personagem_AtualizarPosicao(&jogador,keys, bit_map_Fase1);
+                        Personagem_AtualizarPosicao(&jogador,keys, BitMaps[Fase]);
                         al_draw_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
                         jogador.frames.currentFrame, 0, jogador.frames.w_Frame,
                         jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0); 
@@ -708,19 +785,19 @@ int main(int argc, char *argv[]) {
                                         // printf("\n\tPOSICAO JOGADOR : %d,%d \n\t POSICAO SOLDADO: %d, %d", 
                                         //curr_posicao_plyr.x, curr_posicao_plyr.y, Soldado_militar[i].pos.x, Soldado_militar[i].pos.y);
                                         
-                                        al_draw_bitmap_region(Boss_fase1.sprite.Imagem_walk_EAST,
+                                      /*  al_draw_bitmap_region(Boss_fase1.sprite.Imagem_walk_EAST,
                                                                 Boss_fase1.sprite.curr_X,Boss_fase1.sprite.curr_Y,
                                                                 Boss_fase1.sprite.Width, Boss_fase1.sprite.Height,
-                                                                Boss_fase.pos.x, Boss_fase1.pos.y,
-                                                                (Boss_fase1.dir == sm_direita)? 0 : 1);
+                                                                Boss_fase1.pos.x, Boss_fase1.pos.y,
+                                                                (Boss_fase1.dir == sm_direita)? 0 : 1);*/
                                         Boss_fase1.vida--;
 
                                         al_draw_tinted_bitmap_region(Boss_fase1.sprite.Imagem_walk_EAST,al_map_rgb(135,0,0),
                                                                     Boss_fase1.sprite.curr_X, 0, Boss_fase1.sprite.Width,
                                                                     Boss_fase1.sprite.Height, Boss_fase1.pos.x, 
-                                                                    Boss_fase1.pos.y, 0);
+                                                                    Boss_fase1.pos.y,(Boss_fase1.dir == sm_direita)? 0 : 1);
                                     }
-                                else{
+                                else if(Boss_fase1.action == sm_attack){
                                     al_draw_bitmap_region(Boss_fase1.sprite.Imagem_attack_EAST,
                                                             Boss_fase1.sprite.curr_X = 0, Boss_fase1.sprite.curr_Y = 0,
                                                             Boss_fase1.sprite.Width, Boss_fase1.sprite.Height,
@@ -740,22 +817,27 @@ int main(int argc, char *argv[]) {
                                 // esse if verifica o intervalo para mudar de frame 
                                 // esse numero esquisito ai é o intervalo
                                 hitted = false;
-                                if(jogador.Acao == Attack && Esta_nas_proximidades(Soldado_militar[i].pos.x, Soldado_militar[i].pos.y, jogador.pos.x, jogador.pos.y, 20)){
+                                if(jogador.Acao == Attack && Esta_nas_proximidades(Soldado_militar[i].pos.x,
+                                 Soldado_militar[i].pos.y, jogador.pos.x, jogador.pos.y, 23)){
+                                    Soldado_militar[i].vida --;
                                     hitted = true;
                                 }
 
                                 vivo = true;
+                                // wtf?
                                 if(Soldado_militar[i].vida <= 0) vivo = false;
                                 else qtd_vivo++;
 
                                 if(((al_get_time() - marcadorDeTempo) > 0.03169) || (marcadorDeTempo == 0 && vivo)){
                                     //timing = 0;
                                     if(Soldado_militar[i].dir == sm_direita && Soldado_militar[i].action == sm_walk){
-                                        if(!Existe_Obstaculo(Soldado_militar[i].pos.x + Soldado_militar[i].pos.dx + 32, Soldado_militar[i].pos.y,bit_map_Fase2) && !HoraDoAtaque(Soldado_militar[i].pos.x, Soldado_militar[i].pos.y, curr_posicao_plyr)){ 
+                                       if(!Existe_Obstaculo(Soldado_militar[i].pos.x + Soldado_militar[i].pos.dx + 32, 
+                                         Soldado_militar[i].pos.y,bit_map_Fase2) && !HoraDoAtaque(Soldado_militar[i].pos.x,
+                                         Soldado_militar[i].pos.y, curr_posicao_plyr)){ 
                                                 // printf("\nNAO EXISTE OBSTACULO A DIREITA \n");
                                                 Soldado_militar[i].pos.x += Soldado_militar[i].pos.dx;
                                         }
-                                        else { 
+                                        else{ 
                                             Soldado_militar[i].dir = sm_esquerda;
                                         } 
                                     }
@@ -788,7 +870,31 @@ int main(int argc, char *argv[]) {
                                         else{
                                             Soldado_militar[i].dir = sm_esquerda; // não recordo-me a direção original do sprite 
                                         }
+                                        if(Esta_nas_proximidades(jogador.pos.x,jogador.pos.y,Soldado_militar[i].pos.x,
+                                            Soldado_militar[i].pos.y,23)){
+                                            vzs_atingido++;
+                                                if(vzs_atingido > 20){
+                                                    jogador.vida--;
+                                                    vzs_atingido = 0;
+                                                    al_draw_tinted_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
+                                                    al_map_rgb(135,0,0), jogador.frames.currentFrame, 0, jogador.frames.w_Frame, 
+                                                    jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0);
+                                                    if(!Existe_Obstaculo(jogador.pos.x - jogador.pos.dx, 
+                                                      jogador.pos.y + jogador.pos.dy,bit_map_Fase2)){
+                                                            jogador.pos.x -= 3;
+                                                            jogador.pos.y += 3;
+                                                      }
+                                                    
+                                                }
+                                        }
+                                        else{
+                                            vzs_atingido = 0;
+                                        }
+
                                         times_of_attack_enemy += 1;
+                                        /// correção dos jogadores ficarem parados
+                                    }else{
+                                        Soldado_militar[i].action = sm_walk;
                                     }
                                     // isso meio que  ta mensurando o tempo de ataque
                                     if(times_of_attack_enemy > 20 && Soldado_militar[i].action == sm_attack){
@@ -803,24 +909,31 @@ int main(int argc, char *argv[]) {
                                     if(hitted){
                                         // printf("\n\tPOSICAO JOGADOR : %d,%d \n\t POSICAO SOLDADO: %d, %d", 
                                         //curr_posicao_plyr.x, curr_posicao_plyr.y, Soldado_militar[i].pos.x, Soldado_militar[i].pos.y);
-                                        al_draw_bitmap_region(Soldado_militar[i].sprite.Imagem,
+                                        /*al_draw_bitmap_region(Soldado_militar[i].sprite.Imagem_walk_EAST,
                                                                 Soldado_militar[i].sprite.curr_X,Soldado_militar[i].sprite.curr_Y,
                                                                 Soldado_militar[i].sprite.Width, Soldado_militar[i].sprite.Height,
                                                                 Soldado_militar[i].pos.x, Soldado_militar[i].pos.y,
-                                                                (Soldado_militar[i].dir == sm_direita)? 0 : 1);
+                                                                (Soldado_militar[i].dir == sm_direita)? 0 : 1);*/
                                         Soldado_militar[i].vida--;
-                                        al_draw_tinted_bitmap_region(Soldado_militar[i].sprite.Imagem,al_map_rgb(135,0,0),
+                                        al_draw_tinted_bitmap_region(Soldado_militar[i].sprite.Imagem_walk_EAST,al_map_rgb(135,0,0),
                                                         Soldado_militar[i].sprite.curr_X, 0, Soldado_militar[i].sprite.Width,
                                                         Soldado_militar[i].sprite.Height, Soldado_militar[i].pos.x, 
                                                         Soldado_militar[i].pos.y, 0);
+                                        hitted = false;
                                     }
-                                    else{
+                                    else if(Soldado_militar[i].action == sm_attack){
                                         al_draw_bitmap_region(Soldado_militar[i].sprite.Imagem_attack_EAST,
                                                                 Soldado_militar[i].sprite.curr_X = 0,Soldado_militar[i].sprite.curr_Y = 0,
                                                                 Soldado_militar[i].sprite.Width, Soldado_militar[i].sprite.Height,
                                                                 Soldado_militar[i].pos.x, Soldado_militar[i].pos.y,
                                                                 (Soldado_militar[i].dir == sm_direita)? 1: 0);
                                         //al_rest(13.0);
+                                    }else{
+                                         al_draw_bitmap_region(Soldado_militar[i].sprite.Imagem_walk_EAST,
+                                                                Soldado_militar[i].sprite.curr_X,Soldado_militar[i].sprite.curr_Y = 0,
+                                                                Soldado_militar[i].sprite.Width, Soldado_militar[i].sprite.Height,
+                                                                Soldado_militar[i].pos.x, Soldado_militar[i].pos.y,
+                                                                (Soldado_militar[i].dir == sm_direita)? 1: 0);
                                     }
                                 }
                             }
@@ -899,15 +1012,22 @@ int main(int argc, char *argv[]) {
                                         al_draw_tinted_bitmap_region(Boss_fase2.sprite.Imagem_walk_EAST,al_map_rgb(135,0,0),
                                                                     Boss_fase2.sprite.curr_X, 0, Boss_fase2.sprite.Width,
                                                                     Boss_fase2.sprite.Height, Boss_fase2.pos.x, 
-                                                                    Boss_fase2.pos.y, 0);
+                                                                    Boss_fase2.pos.y, (Boss_fase2.dir == sm_direita)? 0 : 1);
                                     }
-                                    else{
+                                    else if(Boss_fase2.action == sm_attack){
                                         al_draw_bitmap_region(Boss_fase2.sprite.Imagem_attack_EAST,
                                                                 Boss_fase2.sprite.curr_X = 0, Boss_fase2.sprite.curr_Y = 0,
                                                                 Boss_fase2.sprite.Width, Boss_fase2.sprite.Height,
                                                                 Boss_fase2.pos.x, Boss_fase2.pos.y,
                                                                 (Boss_fase2.dir == sm_direita)? 1: 0);
+                                        
                                         //al_rest(13.0);
+                                    }else{
+                                        al_draw_bitmap_region(Boss_fase2.sprite.Imagem_walk_EAST,
+                                                                Boss_fase2.sprite.curr_X,Boss_fase2.sprite.curr_Y,
+                                                                Boss_fase2.sprite.Width, Boss_fase2.sprite.Height,
+                                                                Boss_fase2.pos.x, Boss_fase2.pos.y,
+                                                                (Boss_fase2.dir == sm_direita)? 0 : 1);
                                     }
                                     n_soldados_militares = 0;
                                 }

@@ -158,7 +158,7 @@ void Criar_Soldado_Militar(SOLDADO_MEDIEVAL **Soldado_militar, int n_soldados_mi
             }
             (*Soldado_militar)[i].dir = sm_esquerda;
             (*Soldado_militar)[i].action = sm_walk;
-            (*Soldado_militar)[i].vida = 4;
+            (*Soldado_militar)[i].vida = 30;
             (*Soldado_militar)[i].hitted  = false;
         }
 
