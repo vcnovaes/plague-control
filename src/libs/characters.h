@@ -120,8 +120,8 @@ void Criar_Soldado_Militar(SOLDADO_MEDIEVAL **Soldado_militar, int n_soldados_mi
 
 void Criar_InimigosFase3(SOLDADO_MEDIEVAL **InimigosF3, int n_inimigos, char *Imagens[2], int map[21][30]);
 //void Criar_BossFase1(SOLDADO_MEDIEVAL *Boss_fase1, char *Imagens_walk[4],char  * Imagens_attack[4], int map[21][30]);
-void Criar_BossFase1(SOLDADO_MEDIEVAL *Boss, char *Imagens_walk[4],char  * Imagens_attack[4], int map[21][30]);
-void Criar_BossFase2(SOLDADO_MEDIEVAL *Boss, char *Imagens_walk[4],char  * Imagens_attack[4], int map[21][30]);
+void Criar_BossFase1(SOLDADO_MEDIEVAL *Boss, char *Imagens_walk,char * Imagens_attack, int map[21][30]);
+void Criar_BossFase2(SOLDADO_MEDIEVAL *Boss, char *Imagens_walk[4],char * Imagens_attack[4], int map[21][30]);
 void Criar_BossFase3(SOLDADO_MEDIEVAL *Presidente, char *Imagens_walk[2],char  * Imagens_attack[2], int map[21][30]);
 
 

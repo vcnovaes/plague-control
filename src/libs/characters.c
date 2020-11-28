@@ -274,27 +274,27 @@ void Criar_BossFase2(SOLDADO_MEDIEVAL *Boss, char *Imagens_walk[4],char  * Image
     Boss->vida = 25;
     Boss->dir = sm_esquerda;
     Boss->action = sm_walk; 
-    Boss->pos.y = (Display_HEIGHT) /2;
+    Boss->pos.y = 299;
     Boss->hitted = false;
-    Boss->pos.x = (Display_WIDTH) / 2;
-    Boss->pos.x = (rand() % (Display_WIDTH  + 1)) + 0;
-    Boss->pos.y = (rand() % (Display_HEIGHT  - 150));
+    Boss->pos.x = 400;
+    //Boss->pos.x = (rand() % (Display_WIDTH  + 1)) + 0;
+    //Boss->pos.y = (rand() % (Display_HEIGHT  - 150));
             //Esse loop assegura a posição inicial do soldado não ser um obstaculo
             
             
-            Boss->pos.dx = 3;
-            Boss->pos.dy = 3;
-            while (Existe_Obstaculo(Boss->pos.x + Boss->pos.dx,
-                    Boss->pos.y + Boss->pos.dy, map))
-            {
-                Boss->pos.x = (rand() % (Display_WIDTH  - 100 + 1)) + 0;
-                Boss->pos.y = (rand() % (Display_HEIGHT  - 150));
-            
-            }
-            Boss->dir = sm_esquerda;
-            Boss->action = sm_walk;
-            Boss->vida = 80;
-            Boss->hitted  = false;
+    Boss->pos.dx = 5;
+    Boss->pos.dy = 5;
+   /* while (Existe_Obstaculo(Boss->pos.x + Boss->pos.dx,
+            Boss->pos.y + Boss->pos.dy, map))
+    {
+        Boss->pos.x = (rand() % (Display_WIDTH  - 100 + 1)) + 0;
+        Boss->pos.y = (rand() % (Display_HEIGHT  - 150));
+    
+    }*/
+    Boss->dir = sm_esquerda;
+    Boss->action = sm_walk;
+    Boss->vida = 80;
+    Boss->hitted  = false;
 
 
 
@@ -322,10 +322,14 @@ void Criar_BossFase3(SOLDADO_MEDIEVAL *Presidente, char *Imagens_walk[2], char *
 
 }
 
-void Criar_BossFase1(SOLDADO_MEDIEVAL *Boss_fase1, char *Imagens_walk[1], char *Imagens_attack[1],int map[21][30]){
+void Criar_BossFase1(SOLDADO_MEDIEVAL *Boss_fase1, char *Imagens_walk, char *Imagens_attack, int map[21][30]){
 
-    Boss_fase1->sprite.Imagem_walk_EAST = al_load_bitmap(Imagens_walk[0]);
-    Boss_fase1->sprite.Imagem_attack_EAST = al_load_bitmap(Imagens_attack[0]);
+    Boss_fase1->sprite.Imagem_walk_EAST = al_load_bitmap(Imagens_walk);
+    Boss_fase1->sprite.Imagem_attack_EAST = al_load_bitmap(Imagens_attack);
+    if(!(Boss_fase1->sprite.Imagem_attack_EAST && Boss_fase1->sprite.Imagem_walk_EAST)){
+        printf("Erro ao carregar as imagens do primeiro boss\n\n");
+        exit(-1);
+    }
 
     al_convert_mask_to_alpha(Boss_fase1->sprite.Imagem_walk_EAST, al_map_rgb(0, 0, 0));
     al_convert_mask_to_alpha(Boss_fase1->sprite.Imagem_attack_EAST, al_map_rgb(0, 0, 0));

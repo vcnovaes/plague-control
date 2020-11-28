@@ -13,7 +13,7 @@
 
 
 //Nesse arquivo ficariam os controles  graficos, como as mudanças de frame dos objetos
-enum sm_dir { sm_direita, sm_esquerda};
+enum sm_dir { sm_direita, sm_esquerda, sm_north, sm_south};
 enum soldado_militar_linha_de_acao {sm_jump,sm_walk, sm_attack, sm_death};
 enum KEYS{UP, DOWN, LEFT, RIGHT};
 
