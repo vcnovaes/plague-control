@@ -70,4 +70,3 @@ bool Esta_nas_proximidades(int pos_x, int pos_y, int ply_x, int ply_y, int range
     }
     return resp;
 }
-
