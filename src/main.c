@@ -52,7 +52,6 @@ char *IMG_inimigos_fase3[2] = {
     "Graficos/Pixel_Art_Gamejam/Fase 3/coronavirus-walk-redim.png",
     "Graficos/Pixel_Art_Gamejam/Fase 3/Bat 32x32.png"
 };
-
 char *Boss_Walk_Fase2[4] = {
     "Graficos/Pixel_Art_Gamejam/Fase 2/GENERAL/RUN/general_RUN_NORTH_strip4.png", 
     "Graficos/Pixel_Art_Gamejam/Fase 2/GENERAL/RUN/general_RUN_SOUTH_strip4.png", 
@@ -65,7 +64,6 @@ char *Boss_Attack_Fase2[4] = {
         "Graficos/Pixel_Art_Gamejam/Fase 2/GENERAL/ATTACK KICK  single frames/general_ATTACKKICK_WEST.png",
         "Graficos/Pixel_Art_Gamejam/Fase 2/GENERAL/ATTACK KICK  single frames/general_ATTACKKICK_EAST.png",
 };
-
 char *Boss_Walk_Fase3[2] = {
         "Graficos/Pixel_Art_Gamejam/Fase 3/Presidente/presidente_run_left.png",
         "Graficos/Pixel_Art_Gamejam/Fase 3/Presidente/presidente_run_right.png"
@@ -333,7 +331,7 @@ int main(int argc, char *argv[]) {
     al_init_acodec_addon();
     al_init_font_addon();
     al_init_ttf_addon();
-    al_reserve_samples(1);   
+    al_reserve_samples(3);   
 
     //Loading
     Mapas[0] = al_load_bitmap("Graficos/Mapas/Fase 1/mapa_fase1_final.png");
@@ -344,6 +342,8 @@ int main(int argc, char *argv[]) {
     fonte_logo = al_load_font("Graficos/Menu Inicial/Base 02.ttf", 88, 0);
     fonte_creditos = al_load_font("Graficos/Menu Inicial/fonte_menu_inicial.ttf", 30, 0);
     somFundo = al_load_sample("Graficos/Menu Inicial/NDKG_CreepyAtmosphere_Reg.wav");
+    efeito_soco = al_load_sample("Graficos/Efeitos Sonoros/efeito_murro.mp3");
+    efeito_espada = al_load_sample("Graficos/Efeitos Sonoros/efeito_espada.mp3");
     background = al_load_bitmap("Graficos/Menu Inicial/menu_inicial_background.jpeg");
     tela_game_over = al_load_bitmap("Graficos/Menu Inicial/game_over.jpeg");
     tela_creditos = al_load_bitmap("Graficos/Menu Inicial/tela_creditos.jpeg");
@@ -356,9 +356,6 @@ int main(int argc, char *argv[]) {
 
     //Creating
     somFundoInstance = al_create_sample_instance(somFundo);
-    al_reserve_samples(3);  
-    efeito_soco = al_load_sample("Graficos/Efeitos Sonoros/efeito_murro.mp3");
-    efeito_espada = al_load_sample("Graficos/Efeitos Sonoros/efeito_espada.mp3");
     //Configurando musica de fundo
     al_set_sample_instance_playmode(somFundoInstance, ALLEGRO_PLAYMODE_LOOP);
     al_attach_sample_instance_to_mixer(somFundoInstance, al_get_default_mixer());
@@ -459,7 +456,7 @@ int main(int argc, char *argv[]) {
         }
         else if(estado_atual == FASE1 || estado_atual == FASE2 || estado_atual == FASE3){
             //Apresentar as telas adicionais entre as fases
-         /*   if(entrouFase1 == false){
+            if(entrouFase1 == false){
                 al_draw_bitmap(telasAdicionais[0], 0, 0, 0);
                 al_flip_display();
                 al_rest(5.0);
@@ -475,7 +472,7 @@ int main(int argc, char *argv[]) {
                 al_rest(5.0);
                 entrouFase2 = true;
                 Fase = Fase2;
-            }*/
+            }
             if(entrouFase3 == false && passouFase2 == true){
                 al_draw_bitmap(telasAdicionais[3], 0, 0, 0);
                 al_flip_display();
@@ -613,7 +610,7 @@ int main(int argc, char *argv[]) {
                             hitted = false;
                             if(jogador.Acao == Attack && Esta_nas_proximidades(Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y, jogador.pos.x, jogador.pos.y, 20)){
                                 hitted = true;
-                                
+                                al_play_sample(efeito_espada, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
                                 /// Soldado_medieval[i].vida--;
                             }
 
@@ -707,6 +704,7 @@ int main(int argc, char *argv[]) {
                                                         Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y,
                                                         (Soldado_medieval[i].dir == sm_direita)? 0 : 1);
                                     Soldado_medieval[i].vida--;
+                                    al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
                                     al_draw_tinted_bitmap_region(Soldado_medieval[i].sprite.Imagem,al_map_rgb(135,0,0),
                                                             Soldado_medieval[i].sprite.curr_X, 0, Soldado_medieval[i].sprite.Width,
                                                             Soldado_medieval[i].sprite.Height, Soldado_medieval[i].pos.x, 
@@ -786,8 +784,6 @@ int main(int argc, char *argv[]) {
                                                             }
                                                  }
                                                 
-
-
                                              }*/
                                     //isso meio que  ta mensurando o tempo de ataque
                                     if(times_of_attack_enemy > 20 && Boss_fase1.action == sm_attack){
@@ -809,6 +805,7 @@ int main(int argc, char *argv[]) {
                                                                 Boss_fase1.pos.x, Boss_fase1.pos.y,
                                                                 (Boss_fase1.dir == sm_direita)? 0 : 1);*/
                                         Boss_fase1.vida--;
+                                        al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
 
                                         al_draw_tinted_bitmap_region(Boss_fase1.sprite.Imagem_walk_EAST,al_map_rgb(135,0,0),
                                                                     Boss_fase1.sprite.curr_X, 0, Boss_fase1.sprite.Width,
@@ -839,6 +836,7 @@ int main(int argc, char *argv[]) {
                                  Soldado_militar[i].pos.y, jogador.pos.x, jogador.pos.y, 23)){
                                     Soldado_militar[i].vida --;
                                     hitted = true;
+                                    al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
                                 }
 
                                 vivo = true;
@@ -933,6 +931,7 @@ int main(int argc, char *argv[]) {
                                                                 Soldado_militar[i].pos.x, Soldado_militar[i].pos.y,
                                                                 (Soldado_militar[i].dir == sm_direita)? 0 : 1);*/
                                         Soldado_militar[i].vida--;
+                                        al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
                                         al_draw_tinted_bitmap_region(Soldado_militar[i].sprite.Imagem_walk_EAST,al_map_rgb(135,0,0),
                                                         Soldado_militar[i].sprite.curr_X, 0, Soldado_militar[i].sprite.Width,
                                                         Soldado_militar[i].sprite.Height, Soldado_militar[i].pos.x, 
@@ -954,9 +953,6 @@ int main(int argc, char *argv[]) {
                                                                 (Soldado_militar[i].dir == sm_direita)? 1: 0);
                                         printf("\nJogaor posicao : (%d,%d)\n",curr_posicao_plyr.x, curr_posicao_plyr.y);
                                     }
-
-
-                                    
                                 }
                             }
                             if(!qtd_vivo){
@@ -964,6 +960,7 @@ int main(int argc, char *argv[]) {
                                 hitted = false;
                                 if(jogador.Acao == Attack && Esta_nas_proximidades(Boss_fase2.pos.x, Boss_fase2.pos.y, jogador.pos.x, jogador.pos.y, 20)){
                                     hitted = true;
+                                    al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
                                 }
                                 vivo = true;
                                 if(Boss_fase2.vida <= 0){
@@ -1041,7 +1038,7 @@ int main(int argc, char *argv[]) {
                                                                 Boss_fase2.pos.x, Boss_fase2.pos.y,
                                                                 (Boss_fase2.dir == sm_direita)? 0 : 1);*/
                                         Boss_fase2.vida--;
-
+                                        al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
                                         al_draw_tinted_bitmap_region(Boss_fase2.sprite.Imagem_walk_EAST,al_map_rgb(135,0,0),
                                                                     Boss_fase2.sprite.curr_X, 0, Boss_fase2.sprite.Width,
                                                                     Boss_fase2.sprite.Height, Boss_fase2.pos.x, 
@@ -1073,6 +1070,7 @@ int main(int argc, char *argv[]) {
                                 hitted = false;
                                 if(jogador.Acao == Attack && Esta_nas_proximidades(Presidente.pos.x, Presidente.pos.y, jogador.pos.x, jogador.pos.y, 20)){
                                     hitted = true;
+                                    al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
                                 }
                                 vivo = true;
                                 if(Presidente.vida <= 0){
@@ -1111,6 +1109,7 @@ int main(int argc, char *argv[]) {
                                     if(HoraDoAtaque(Presidente.pos.x, Presidente.pos.y,curr_posicao_plyr)){  
                                         printf("\nHORA DE ATACAR\n");
                                         Presidente.action = sm_attack;
+                                        al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
                                         if(Presidente.pos.x < curr_posicao_plyr.x){
                                             Presidente.dir = sm_direita;
                                         }
@@ -1139,7 +1138,7 @@ int main(int argc, char *argv[]) {
                                                                 Presidente.pos.x, Presidente.pos.y,
                                                                 (Presidente.dir == sm_direita)? 0 : 1);
                                         Presidente.vida--;
-
+                                        al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
                                         al_draw_tinted_bitmap_region(Presidente.sprite.Imagem_walk_EAST,al_map_rgb(135,0,0),
                                                                         Presidente.sprite.curr_X, 0, Presidente.sprite.Width,
                                                                         Presidente.sprite.Height, Presidente.pos.x, 
