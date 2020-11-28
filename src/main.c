@@ -60,10 +60,10 @@ char *Boss_Walk_Fase2[4] = {
     "Graficos/Pixel_Art_Gamejam/Fase 2/GENERAL/RUN/general_RUN_EAST_strip4.png", 
 };
 char *Boss_Attack_Fase2[4] = {
-        "Plague-Control/Graficos/Pixel_Art_Gamejam/Fase 2/GENERAL/ATTACK KICK  single frames/general_ATTACKKICK_NORTH.png",
-        "Plague-Control/Graficos/Pixel_Art_Gamejam/Fase 2/GENERAL/ATTACK KICK  single frames/general_ATTACKKICK_SOUTH.png",
-        "Plague-Control/Graficos/Pixel_Art_Gamejam/Fase 2/GENERAL/ATTACK KICK  single frames/general_ATTACKKICK_WEST.png",
-        "Plague-Control/Graficos/Pixel_Art_Gamejam/Fase 2/GENERAL/ATTACK KICK  single frames/general_ATTACKKICK_EAST.png",
+        "Graficos/Pixel_Art_Gamejam/Fase 2/GENERAL/ATTACK KICK  single frames/general_ATTACKKICK_NORTH.png",
+        "Graficos/Pixel_Art_Gamejam/Fase 2/GENERAL/ATTACK KICK  single frames/general_ATTACKKICK_SOUTH.png",
+        "Graficos/Pixel_Art_Gamejam/Fase 2/GENERAL/ATTACK KICK  single frames/general_ATTACKKICK_WEST.png",
+        "Graficos/Pixel_Art_Gamejam/Fase 2/GENERAL/ATTACK KICK  single frames/general_ATTACKKICK_EAST.png",
 };
 
 char *Boss_Walk_Fase3[2] = {
@@ -1009,20 +1009,20 @@ int main(int argc, char *argv[]) {
                                                                 (Boss_fase2.dir == sm_direita)? 0 : 1);*/
                                         Boss_fase2.vida--;
 
-                                        al_draw_tinted_bitmap_region(Boss_fase2.sprite.Imagem_walk_WEST,al_map_rgb(135,0,0),
+                                        al_draw_tinted_bitmap_region(Boss_fase2.sprite.Imagem_walk_EAST,al_map_rgb(135,0,0),
                                                                     Boss_fase2.sprite.curr_X, 0, Boss_fase2.sprite.Width,
                                                                     Boss_fase2.sprite.Height, Boss_fase2.pos.x, 
                                                                     Boss_fase2.pos.y, (Boss_fase2.dir == sm_direita)? 0 : 1);
                                     }
                                     else if(Boss_fase2.action == sm_attack){
-                                        al_draw_bitmap_region(Boss_fase2.sprite.Imagem_attack_WEST,
+                                        al_draw_bitmap_region(Boss_fase2.sprite.Imagem_attack_EAST,
                                                                 0,0, Boss_fase2.sprite.Width, Boss_fase2.sprite.Height,
                                                                 Boss_fase2.pos.x, Boss_fase2.pos.y,
                                                                 (Boss_fase2.dir == sm_direita)? 1: 0);
                                         
                                         //al_rest(13.0);
                                     }else{
-                                        al_draw_bitmap_region(Boss_fase2.sprite.Imagem_walk_WEST,
+                                        al_draw_bitmap_region(Boss_fase2.sprite.Imagem_walk_EAST,
                                                                 Boss_fase2.sprite.curr_X,Boss_fase2.sprite.curr_Y,
                                                                 Boss_fase2.sprite.Width, Boss_fase2.sprite.Height,
                                                                 Boss_fase2.pos.x, Boss_fase2.pos.y,

@@ -247,13 +247,24 @@ void Criar_BossFase2(SOLDADO_MEDIEVAL *Boss, char *Imagens_walk[4],char  * Image
     Boss->sprite.Imagem_walk_SOUTH = al_load_bitmap(Imagens_walk[South]);
     Boss->sprite.Imagem_walk_EAST = al_load_bitmap(Imagens_walk[East]);
     Boss->sprite.Imagem_walk_WEST = al_load_bitmap(Imagens_walk[West]);
-    if(Boss->sprite.Imagem_walk_NORTH)
+    if(!(Boss->sprite.Imagem_walk_NORTH && Boss->sprite.Imagem_walk_EAST && Boss->sprite.Imagem_walk_SOUTH 
+        && Boss->sprite.Imagem_walk_WEST)){
+            printf("\nErro ao carregar magens de andar do boss da fase 2 : (\n ");
+            exit(-1);
+        }
 
 
     Boss->sprite.Imagem_attack_NORTH = al_load_bitmap(Imagens_attack[North]);
     Boss->sprite.Imagem_attack_SOUTH = al_load_bitmap(Imagens_attack[South]);
     Boss->sprite.Imagem_attack_EAST = al_load_bitmap(Imagens_attack[East]);
     Boss->sprite.Imagem_attack_WEST = al_load_bitmap(Imagens_attack[West]);
+
+    if(!(Boss->sprite.Imagem_attack_NORTH && Boss->sprite.Imagem_attack_EAST && Boss->sprite.Imagem_attack_SOUTH 
+        && Boss->sprite.Imagem_attack_WEST)){
+            printf("\nErro ao carregar magens de attack do boss da fase 2 :(\n ");
+            exit(-1);
+        }
+
 
     Boss->sprite.Height = 26;
     Boss->sprite.Width = 16;
@@ -266,6 +277,27 @@ void Criar_BossFase2(SOLDADO_MEDIEVAL *Boss, char *Imagens_walk[4],char  * Image
     Boss->pos.y = (Display_HEIGHT) /2;
     Boss->hitted = false;
     Boss->pos.x = (Display_WIDTH) / 2;
+    Boss->pos.x = (rand() % (Display_WIDTH  + 1)) + 0;
+    Boss->pos.y = (rand() % (Display_HEIGHT  - 150));
+            //Esse loop assegura a posição inicial do soldado não ser um obstaculo
+            
+            
+            Boss->pos.dx = 3;
+            Boss->pos.dy = 3;
+            while (Existe_Obstaculo(Boss->pos.x + Boss->pos.dx,
+                    Boss->pos.y + Boss->pos.dy, map))
+            {
+                Boss->pos.x = (rand() % (Display_WIDTH  - 100 + 1)) + 0;
+                Boss->pos.y = (rand() % (Display_HEIGHT  - 150));
+            
+            }
+            Boss->dir = sm_esquerda;
+            Boss->action = sm_walk;
+            Boss->vida = 80;
+            Boss->hitted  = false;
+
+
+
 }
 
 void Criar_BossFase3(SOLDADO_MEDIEVAL *Presidente, char *Imagens_walk[2], char *Imagens_attack[2],int map[21][30]){
