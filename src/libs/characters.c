@@ -247,6 +247,7 @@ void Criar_BossFase2(SOLDADO_MEDIEVAL *Boss, char *Imagens_walk[4],char  * Image
     Boss->sprite.Imagem_walk_SOUTH = al_load_bitmap(Imagens_walk[South]);
     Boss->sprite.Imagem_walk_EAST = al_load_bitmap(Imagens_walk[East]);
     Boss->sprite.Imagem_walk_WEST = al_load_bitmap(Imagens_walk[West]);
+    if(Boss->sprite.Imagem_walk_NORTH)
 
 
     Boss->sprite.Imagem_attack_NORTH = al_load_bitmap(Imagens_attack[North]);
@@ -264,7 +265,7 @@ void Criar_BossFase2(SOLDADO_MEDIEVAL *Boss, char *Imagens_walk[4],char  * Image
     Boss->action = sm_walk; 
     Boss->pos.y = (Display_HEIGHT) /2;
     Boss->hitted = false;
-    Boss->pos.x = (Display_WIDTH) - 80;
+    Boss->pos.x = (Display_WIDTH) / 2;
 }
 
 void Criar_BossFase3(SOLDADO_MEDIEVAL *Presidente, char *Imagens_walk[2], char *Imagens_attack[2],int map[21][30]){

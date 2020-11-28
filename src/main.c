@@ -97,6 +97,7 @@ enum Fase {Fase1 = 0, Fase2, Fase3};
 enum STATE {FASE1, FASE2, FASE3, MENU, CREDITOS, GAME_OVER};
 
 //Mapas
+
 int bit_map_Fase1[21][30] = {
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -248,8 +249,8 @@ int BitMaps[3][21][30] = {
 PERSONAGEM jogador;
 
 int n_soldados_medievais = 0;  // numero de soldados medievais
-int n_soldados_militares = 2;
-int n_inimigos = 2;
+int n_soldados_militares = 1;
+int n_inimigos = 30;
 /// A função cria os soldados medievais, configurndo suas structs;
 ///
 SOLDADO_MEDIEVAL  *Soldado_medieval = NULL, *Soldado_militar = NULL, *Inimigos_fase3 = NULL, 
@@ -316,7 +317,7 @@ int main(int argc, char *argv[]) {
     bool redraw = true;
     int times_of_attack_enemy = 0;
     int times_of_attack_player = 20;
-    int Fase = Fase1;
+    int Fase = Fase2;
     int vzs_atingido = 0;
     int estado_atual = -1;
     POSICAO curr_posicao_plyr;
@@ -461,7 +462,7 @@ int main(int argc, char *argv[]) {
         }
         else if(estado_atual == FASE1 || estado_atual == FASE2 || estado_atual == FASE3){
             //Apresentar as telas adicionais entre as fases
-            if(entrouFase1 == false){
+         /*   if(entrouFase1 == false){
                 al_draw_bitmap(telasAdicionais[0], 0, 0, 0);
                 al_flip_display();
                 al_rest(5.0);
@@ -477,7 +478,7 @@ int main(int argc, char *argv[]) {
                 al_rest(5.0);
                 entrouFase2 = true;
                 Fase = Fase2;
-            }
+            }*/
             if(entrouFase3 == false && passouFase2 == true){
                 al_draw_bitmap(telasAdicionais[3], 0, 0, 0);
                 al_flip_display();
@@ -492,7 +493,6 @@ int main(int argc, char *argv[]) {
                 estado_atual = CREDITOS; //se acabar o jogo, mostra os creditos
             }
             al_draw_bitmap(Mapas[Fase], 0, 0, 0);
-            al_draw_textf(fonte_creditos, al_map_rgb(255, 0, 0), 40, 20, ALLEGRO_ALIGN_LEFT, "Vidas: %d", jogador.vida);
             //al_flip_display();
 
             // Handle the event
@@ -1002,28 +1002,27 @@ int main(int argc, char *argv[]) {
                                         // printf("\n\tPOSICAO JOGADOR : %d,%d \n\t POSICAO SOLDADO: %d, %d", 
                                         //curr_posicao_plyr.x, curr_posicao_plyr.y, Soldado_militar[i].pos.x, Soldado_militar[i].pos.y);
                                         
-                                        al_draw_bitmap_region(Boss_fase2.sprite.Imagem_walk_EAST,
+                                        /*al_draw_bitmap_region(Boss_fase2.sprite.Imagem_walk_EAST,
                                                                 Boss_fase2.sprite.curr_X,Boss_fase2.sprite.curr_Y,
                                                                 Boss_fase2.sprite.Width, Boss_fase2.sprite.Height,
                                                                 Boss_fase2.pos.x, Boss_fase2.pos.y,
-                                                                (Boss_fase2.dir == sm_direita)? 0 : 1);
+                                                                (Boss_fase2.dir == sm_direita)? 0 : 1);*/
                                         Boss_fase2.vida--;
 
-                                        al_draw_tinted_bitmap_region(Boss_fase2.sprite.Imagem_walk_EAST,al_map_rgb(135,0,0),
+                                        al_draw_tinted_bitmap_region(Boss_fase2.sprite.Imagem_walk_WEST,al_map_rgb(135,0,0),
                                                                     Boss_fase2.sprite.curr_X, 0, Boss_fase2.sprite.Width,
                                                                     Boss_fase2.sprite.Height, Boss_fase2.pos.x, 
                                                                     Boss_fase2.pos.y, (Boss_fase2.dir == sm_direita)? 0 : 1);
                                     }
                                     else if(Boss_fase2.action == sm_attack){
-                                        al_draw_bitmap_region(Boss_fase2.sprite.Imagem_attack_EAST,
-                                                                Boss_fase2.sprite.curr_X = 0, Boss_fase2.sprite.curr_Y = 0,
-                                                                Boss_fase2.sprite.Width, Boss_fase2.sprite.Height,
+                                        al_draw_bitmap_region(Boss_fase2.sprite.Imagem_attack_WEST,
+                                                                0,0, Boss_fase2.sprite.Width, Boss_fase2.sprite.Height,
                                                                 Boss_fase2.pos.x, Boss_fase2.pos.y,
                                                                 (Boss_fase2.dir == sm_direita)? 1: 0);
                                         
                                         //al_rest(13.0);
                                     }else{
-                                        al_draw_bitmap_region(Boss_fase2.sprite.Imagem_walk_EAST,
+                                        al_draw_bitmap_region(Boss_fase2.sprite.Imagem_walk_WEST,
                                                                 Boss_fase2.sprite.curr_X,Boss_fase2.sprite.curr_Y,
                                                                 Boss_fase2.sprite.Width, Boss_fase2.sprite.Height,
                                                                 Boss_fase2.pos.x, Boss_fase2.pos.y,
@@ -1205,6 +1204,7 @@ int main(int argc, char *argv[]) {
                         default:
                             break;
                     }
+                    al_draw_textf(fonte_creditos, al_map_rgb(255, 0, 0), 40, 20, ALLEGRO_ALIGN_LEFT, "Vidas: %d", jogador.vida);
                     printf("Quantidade de vida jogador : %d\n", jogador.vida);
                     al_flip_display();
                     marcadorDeTempo= al_get_time();
