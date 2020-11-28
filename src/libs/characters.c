@@ -165,8 +165,6 @@ void Criar_Soldado_Militar(SOLDADO_MEDIEVAL **Soldado_militar, int n_soldados_mi
 }
 
 
-
-
 void MudarFrame_Personagem(PERSONAGEM * personagem, int IMG_total_W){
   //  int size_x_change_frame =  IMG_total_W / (personagem->frames.qtdFrames);
     if(personagem->frames.currentFrame <  IMG_total_W){
@@ -268,6 +266,7 @@ void Criar_BossFase2(SOLDADO_MEDIEVAL *Boss, char *Imagens_walk[4],char  * Image
     Boss->hitted = false;
     Boss->pos.x = (Display_WIDTH) - 80;
 }
+
 void Criar_BossFase3(SOLDADO_MEDIEVAL *Presidente, char *Imagens_walk[2], char *Imagens_attack[2],int map[21][30]){
 
     Presidente->sprite.Imagem_walk_EAST = al_load_bitmap(Imagens_walk[0]);
@@ -289,3 +288,25 @@ void Criar_BossFase3(SOLDADO_MEDIEVAL *Presidente, char *Imagens_walk[2], char *
     Presidente->hitted = false; 
 
 }
+
+//Feito por Edson (em desenvolvimento)
+/*void Criar_BossFase1(SOLDADO_MEDIEVAL *Padre, char *Imagens_walk[2], char *Imagens_attack[2],int map[21][30]){
+
+    Presidente->sprite.Imagem_walk_EAST = al_load_bitmap(Imagens_walk[0]);
+    Presidente->sprite.Imagem_walk_WEST = al_load_bitmap(Imagens_walk[1]);
+
+    Presidente->sprite.Imagem_attack_EAST = al_load_bitmap(Imagens_attack[0]);
+    Presidente->sprite.Imagem_attack_EAST = al_load_bitmap(Imagens_attack[1]);
+
+    Presidente->sprite.Height = 32;
+    Presidente->sprite.Width = 32;
+    Presidente->sprite.curr_X = 0;
+    Presidente->sprite.curr_Y = 0;
+
+    Presidente->vida = 30;
+    Presidente->dir = sm_esquerda;
+    Presidente->action = sm_walk;
+    Presidente->pos.y = 70;
+    Presidente->pos.x = Display_WIDTH/2;
+    Presidente->hitted = false; 
+}*/
