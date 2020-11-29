@@ -463,7 +463,7 @@ int main(int argc, char *argv[]) {
         }
         else if(estado_atual == FASE1 || estado_atual == FASE2 || estado_atual == FASE3){
             //Apresentar as telas adicionais entre as fases
-            if(entrouFase1 == true){ 
+            if(entrouFase1 == false){ 
                 al_draw_bitmap(telasAdicionais[0], 0, 0, 0);
                 al_flip_display();
                 al_rest(7.0);
@@ -480,7 +480,7 @@ int main(int argc, char *argv[]) {
                 entrouFase2 = true;
                 Fase = Fase2;
             }
-            if(entrouFase3 == false && passouFase2 == false){// mudei aqui true->false/ segundo 
+            if(entrouFase3 == false && passouFase2 == true){// mudei aqui true->false/ segundo 
                 al_draw_bitmap(telasAdicionais[3], 0, 0, 0);
                 al_flip_display();
                 al_rest(7.0);
