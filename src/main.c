@@ -237,9 +237,9 @@ int BitMaps[3][21][30] = {
 
 PERSONAGEM jogador;
 
-int n_soldados_medievais = 1;  // numero de soldados medievais
-int n_soldados_militares = 4;
-int n_inimigos = 30;
+int n_soldados_medievais = 0;  // numero de soldados medievais
+int n_soldados_militares = 0;
+int n_inimigos = 0;
 /// A função cria os soldados medievais, configurndo suas structs;
 ///
 SOLDADO_MEDIEVAL  *Soldado_medieval = NULL, *Soldado_militar = NULL, *Inimigos_fase3 = NULL, 
@@ -1255,9 +1255,11 @@ int main(int argc, char *argv[]) {
                                         }
                                         if(Esta_nas_proximidades(jogador.pos.x,jogador.pos.y,Presidente.pos.x,Presidente.pos.y,25)){
                                             vzs_atingido_p++;
-                                            if(vzs_atingido_p > 16){
+                                            if(vzs_atingido_p > 36){
                                                 jogador.vida--;
                                                 vzs_atingido_p = 0;
+                                                al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
+            
                                                 al_draw_tinted_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
                                                 al_map_rgb(180,0,0), jogador.frames.currentFrame, 0, jogador.frames.w_Frame, 
                                                 jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0);
@@ -1269,13 +1271,14 @@ int main(int argc, char *argv[]) {
                                         else {
                                             vzs_atingido_p = 0;
                                         }
+                                        Presidente.action  = sm_attack;
                                         times_of_attack_enemy += 1;
                                     }
                                     else{
                                         Presidente.action = sm_walk;
                                     }
                                     //isso meio que  ta mensurando o tempo de ataque
-                                    if(times_of_attack_enemy > 35 && Presidente.action == sm_attack){
+                                    if(times_of_attack_enemy > 20 && Presidente.action == sm_attack){
                                         printf("\nParou o ataque\n");
                                         Presidente.action = sm_walk;
                                         times_of_attack_enemy  = 0;
@@ -1305,6 +1308,7 @@ int main(int argc, char *argv[]) {
                                                                 (Presidente.dir == sm_direita)? 0 : 1);*/
                                         Presidente.vida--;
                                         al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
+                                        
                                         al_draw_tinted_bitmap_region(Presidente.sprite.Imagem_walk_EAST,al_map_rgb(135,0,0),
                                                                     Presidente.sprite.curr_X, 0, Presidente.sprite.Width,
                                                                     Presidente.sprite.Height, Presidente.pos.x, 
@@ -1312,9 +1316,10 @@ int main(int argc, char *argv[]) {
                                     }
                                     else if(Presidente.action == sm_attack){
                                         al_draw_bitmap_region(Presidente.sprite.Imagem_attack_EAST,
-                                                                0,0, Presidente.sprite.Width, Presidente.sprite.Height,
+                                                                Presidente.sprite.curr_X + Presidente.sprite.Width,0, 
+                                                                Presidente.sprite.Width, Presidente.sprite.Height,
                                                                 Presidente.pos.x, Presidente.pos.y,
-                                                                (Presidente.dir == sm_direita)? 1: 0);
+                                                                (Presidente.dir == sm_direita)? 0: 1);
                                         
                                         //al_rest(13.0);
                                     }else{
