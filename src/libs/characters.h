@@ -114,7 +114,7 @@ char * IMG_Soldado_Medieval[3]  ={
     */
 void MudarFrame_Personagem(PERSONAGEM  * personagem , int IMG_total_W);
 // Verfica se o inimigo deve atacar
-bool HoraDoAtaque(int pos_inimigo_x, int pos_inimigo_y, POSICAO jogador);
+bool HoraDoAtaque(int pos_inimigo_x, int pos_inimigo_y, POSICAO jogador, int range);
 void Criar_Soldado_Militar(SOLDADO_MEDIEVAL **Soldado_militar, int n_soldados_militares,
                             char * Imagens_RUN[4], char * Imagens_ATTACK[4], int map[21][30]);
 

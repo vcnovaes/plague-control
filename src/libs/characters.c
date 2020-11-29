@@ -177,9 +177,9 @@ void MudarFrame_Personagem(PERSONAGEM * personagem, int IMG_total_W){
     }
     // printf("%d\n",personagem->frames.currentFrame);
 }
-bool HoraDoAtaque(int pos_inimigo_x, int pos_inimigo_y, POSICAO pos_jogador){
+bool HoraDoAtaque(int pos_inimigo_x, int pos_inimigo_y, POSICAO pos_jogador, int range){
     bool ataque = true;
-    if(!Esta_nas_proximidades(pos_inimigo_x,pos_inimigo_y,pos_jogador.x,pos_jogador.y, 32)){
+    if(!Esta_nas_proximidades(pos_inimigo_x,pos_inimigo_y,pos_jogador.x,pos_jogador.y, range)){
         ataque = false;
     }
 

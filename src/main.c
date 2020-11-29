@@ -237,7 +237,7 @@ int BitMaps[3][21][30] = {
 
 PERSONAGEM jogador;
 
-int n_soldados_medievais = 5;  // numero de soldados medievais
+int n_soldados_medievais = 1;  // numero de soldados medievais
 int n_soldados_militares = 1;
 int n_inimigos = 30;
 /// A função cria os soldados medievais, configurndo suas structs;
@@ -368,7 +368,7 @@ int main(int argc, char *argv[]) {
     al_attach_sample_instance_to_mixer(somFundoInstance, al_get_default_mixer());
 
     //Colocando a musica para tocar
-    al_play_sample_instance(somFundoInstance);
+  ///  al_play_sample_instance(somFundoInstance);
 
 
     //Inicializando o estado atual como o menu
@@ -463,22 +463,14 @@ int main(int argc, char *argv[]) {
         }
         else if(estado_atual == FASE1 || estado_atual == FASE2 || estado_atual == FASE3){
             //Apresentar as telas adicionais entre as fases
-<<<<<<< HEAD
             if(entrouFase1 == false){ // mudei aqui false->true
-=======
-            if(entrouFase1 == false){ 
->>>>>>> 0ccfac5fa87ef23d9fad3a98bb99254a3d147322
                 al_draw_bitmap(telasAdicionais[0], 0, 0, 0);
                 al_flip_display();
                 al_rest(7.0);
                 entrouFase1 = true;
                 Fase = Fase1;
             }
-<<<<<<< HEAD
             if(entrouFase2 == false && passouFase1 == true){// mudei aqui false->true e true->false
-=======
-            if(entrouFase2 == false && passouFase1 == true){
->>>>>>> 0ccfac5fa87ef23d9fad3a98bb99254a3d147322
                 al_draw_bitmap(telasAdicionais[1], 0, 0, 0);
                 al_flip_display();
                 al_rest(7.0);
@@ -649,7 +641,7 @@ int main(int argc, char *argv[]) {
                                 //timing = 0;
                                 if(Soldado_medieval[i].dir == sm_direita && Soldado_medieval[i].action == sm_walk){
                                     if(!Existe_Obstaculo(Soldado_medieval[i].pos.x + Soldado_medieval[i].pos.dx + 32, Soldado_medieval[i].pos.y, bit_map_Fase1) 
-                                    && !HoraDoAtaque(Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y, curr_posicao_plyr)){
+                                    && !HoraDoAtaque(Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y, curr_posicao_plyr,32)){
                                         //printf("\nNAO EXISTE OBSTACULO A DIREITA \n");
                                         Soldado_medieval[i].pos.x += Soldado_medieval[i].pos.dx;
                                     }
@@ -659,7 +651,7 @@ int main(int argc, char *argv[]) {
                                 }
                                 if(Soldado_medieval[i].dir == sm_esquerda  && Soldado_medieval[i].action == sm_walk){
                                     if(!Existe_Obstaculo(Soldado_medieval[i].pos.x - Soldado_medieval[i].pos.dx, Soldado_medieval[i].pos.y, bit_map_Fase1) 
-                                    && (!HoraDoAtaque(Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y, curr_posicao_plyr))){ 
+                                    && (!HoraDoAtaque(Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y, curr_posicao_plyr,32))){ 
                                         //printf("\nNAO EXISTE OBSTACULO A ESQUERDA\n");
                                         Soldado_medieval[i].pos.x -= Soldado_medieval[i].pos.dx;
                                     }   
@@ -675,7 +667,7 @@ int main(int argc, char *argv[]) {
                                 else{
                                     Soldado_medieval[i].sprite.curr_X  = 0;
                                 }
-                                if(HoraDoAtaque(Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y,curr_posicao_plyr)){
+                                if(HoraDoAtaque(Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y,curr_posicao_plyr,32)){
                                     printf("\nHora de atacar \n");
                                     Soldado_medieval[i].action = sm_attack;
                                     if(Soldado_medieval[i].pos.x < curr_posicao_plyr.x){
@@ -688,7 +680,7 @@ int main(int argc, char *argv[]) {
                                     times_of_attack_enemy += 1;
                                     if(Esta_nas_proximidades(jogador.pos.x,jogador.pos.y,Soldado_medieval[i].pos.x,Soldado_medieval[i].pos.y,16)){
                                         vzs_atingido++;
-                                        if(vzs_atingido > 100){
+                                        if(vzs_atingido > 50){
                                             jogador.vida--;
                                             vzs_atingido = 0;
                                             al_play_sample(efeito_espada, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
@@ -705,7 +697,7 @@ int main(int argc, char *argv[]) {
                                     Soldado_medieval[i].action = sm_walk;
                                 }
                                 // isso meio que  ta mensurando o tempo de ataque
-                                if(times_of_attack_enemy > 100){
+                                if(times_of_attack_enemy > 50){
                                     printf("\n%d \n",times_of_attack_enemy);
                                     printf("\nO ataque parou\n");
                                     Soldado_medieval[i].action = sm_walk;
@@ -758,7 +750,7 @@ int main(int argc, char *argv[]) {
                                 //timing = 0;
                                 if(Boss_fase1.dir == sm_direita && Boss_fase1.action == sm_walk){
                                     if(!Existe_Obstaculo(Boss_fase1.pos.x + Boss_fase1.pos.dx + 32, Boss_fase1.pos.y, bit_map_Fase1)
-                                     && !HoraDoAtaque(Boss_fase1.pos.x,Boss_fase1.pos.y, curr_posicao_plyr)){  
+                                     && !HoraDoAtaque(Boss_fase1.pos.x,Boss_fase1.pos.y, curr_posicao_plyr,20)){  
                                         // printf("\nNAO EXISTE OBSTACULO A DIREITA \n");
                                         Boss_fase1.pos.x += Boss_fase1.pos.dx;
                                     }
@@ -768,7 +760,7 @@ int main(int argc, char *argv[]) {
                                 }
                                     if((Boss_fase1.dir == sm_esquerda  && Boss_fase1.action == sm_walk )){
                                         if(!Existe_Obstaculo(Boss_fase1.pos.x  - Boss_fase1.pos.dx, Boss_fase1.pos.y, bit_map_Fase1)
-                                         && (!HoraDoAtaque(Boss_fase1.pos.x, Boss_fase1.pos.y, curr_posicao_plyr))){  
+                                         && (!HoraDoAtaque(Boss_fase1.pos.x, Boss_fase1.pos.y, curr_posicao_plyr,20))){  
                                             //printf("\nNAO EXISTE OBSTACULO A ESQUERDA\n");
                                             Boss_fase1.pos.x -= Boss_fase1.pos.dx;
                                         }   
@@ -784,7 +776,7 @@ int main(int argc, char *argv[]) {
                                     else{
                                         Boss_fase1.sprite.curr_X  = 0;
                                     }
-                                    if(HoraDoAtaque(Boss_fase1.pos.x, Boss_fase1.pos.y,curr_posicao_plyr)){  
+                                    if(HoraDoAtaque(Boss_fase1.pos.x, Boss_fase1.pos.y,curr_posicao_plyr,20)){  
                                         printf("\nHORA DE ATACAR\n");
                                         Boss_fase1.action = sm_attack;
                                         if(Boss_fase1.pos.x < curr_posicao_plyr.x){
@@ -852,10 +844,6 @@ int main(int argc, char *argv[]) {
                                 // int timing = (al_get_time() - marcadorDeTempo) + timing;  
                                 // esse if verifica o intervalo para mudar de frame 
                                 // esse numero esquisito ai é o intervalo
-<<<<<<< HEAD
-=======
-                                //al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
->>>>>>> 0ccfac5fa87ef23d9fad3a98bb99254a3d147322
                                 hitted = false;
                                 if(jogador.Acao == Attack && Esta_nas_proximidades(Soldado_militar[i].pos.x,
                                  Soldado_militar[i].pos.y, jogador.pos.x, jogador.pos.y, 23)){
@@ -874,7 +862,7 @@ int main(int argc, char *argv[]) {
                                     if(Soldado_militar[i].dir == sm_direita && Soldado_militar[i].action == sm_walk){
                                        if(!Existe_Obstaculo(Soldado_militar[i].pos.x + Soldado_militar[i].pos.dx + 32, 
                                          Soldado_militar[i].pos.y,bit_map_Fase2) && !HoraDoAtaque(Soldado_militar[i].pos.x,
-                                         Soldado_militar[i].pos.y, curr_posicao_plyr)){ 
+                                         Soldado_militar[i].pos.y, curr_posicao_plyr,18)){ 
                                                 // printf("\nNAO EXISTE OBSTACULO A DIREITA \n");
                                                 Soldado_militar[i].pos.x += Soldado_militar[i].pos.dx;
                                         }
@@ -883,7 +871,7 @@ int main(int argc, char *argv[]) {
                                         } 
                                     }
                                     if((Soldado_militar[i].dir == sm_esquerda  && Soldado_militar[i].action == sm_walk )){
-                                        if(!Existe_Obstaculo(Soldado_militar[i].pos.x  - Soldado_militar[i].pos.dx, Soldado_militar[i].pos.y,bit_map_Fase2) && (!HoraDoAtaque(Soldado_militar[i].pos.x, Soldado_militar[i].pos.y, curr_posicao_plyr))){
+                                        if(!Existe_Obstaculo(Soldado_militar[i].pos.x  - Soldado_militar[i].pos.dx, Soldado_militar[i].pos.y,bit_map_Fase2) && (!HoraDoAtaque(Soldado_militar[i].pos.x, Soldado_militar[i].pos.y, curr_posicao_plyr,18))){
                                                 //printf("\nNAO EXISTE OBSTACULO A ESQUERDA\n");
                                                 Soldado_militar[i].pos.x -= Soldado_militar[i].pos.dx;
                                         }   
@@ -902,7 +890,7 @@ int main(int argc, char *argv[]) {
                                         Soldado_militar[i].sprite.curr_X  = 0;
                                     }
 
-                                    if(HoraDoAtaque(Soldado_militar[i].pos.x, Soldado_militar[i].pos.y,curr_posicao_plyr)){  
+                                    if(HoraDoAtaque(Soldado_militar[i].pos.x, Soldado_militar[i].pos.y,curr_posicao_plyr,18)){  
                                         printf("\nHORA DE ATACAR\n");
                                         Soldado_militar[i].action = sm_attack;
                                         if(Soldado_militar[i].pos.x < curr_posicao_plyr.x){
@@ -997,7 +985,7 @@ int main(int argc, char *argv[]) {
                                 if(((al_get_time() - marcadorDeTempo) > 0.03169) || (marcadorDeTempo == 0 && vivo)){
                                     //timing = 0;
                                     if(Boss_fase2.dir == sm_direita && Boss_fase2.action == sm_walk){
-                                        if(!Existe_Obstaculo(Boss_fase2.pos.x + Boss_fase2.pos.dx + 32, Boss_fase2.pos.y, bit_map_Fase2) && !HoraDoAtaque(Boss_fase2.pos.x,Boss_fase2.pos.y, curr_posicao_plyr)){  
+                                        if(!Existe_Obstaculo(Boss_fase2.pos.x + Boss_fase2.pos.dx + 32, Boss_fase2.pos.y, bit_map_Fase2) && !HoraDoAtaque(Boss_fase2.pos.x,Boss_fase2.pos.y, curr_posicao_plyr,18)){  
                                             // printf("\nNAO EXISTE OBSTACULO A DIREITA \n");
                                             Boss_fase2.pos.x += Boss_fase2.pos.dx;
                                         }
@@ -1006,7 +994,7 @@ int main(int argc, char *argv[]) {
                                         } 
                                     }
                                     if((Boss_fase2.dir == sm_esquerda  && Boss_fase2.action == sm_walk )){
-                                        if(!Existe_Obstaculo(Boss_fase2.pos.x  - Boss_fase2.pos.dx, Boss_fase2.pos.y,bit_map_Fase2) && (!HoraDoAtaque(Boss_fase2.pos.x, Boss_fase2.pos.y, curr_posicao_plyr))){  
+                                        if(!Existe_Obstaculo(Boss_fase2.pos.x  - Boss_fase2.pos.dx, Boss_fase2.pos.y,bit_map_Fase2) && (!HoraDoAtaque(Boss_fase2.pos.x, Boss_fase2.pos.y, curr_posicao_plyr,18))){  
                                             //printf("\nNAO EXISTE OBSTACULO A ESQUERDA\n");
                                             Boss_fase2.pos.x -= Boss_fase2.pos.dx;
                                         }   
@@ -1022,7 +1010,7 @@ int main(int argc, char *argv[]) {
                                     else{
                                         Boss_fase2.sprite.curr_X  = 0;
                                     }
-                                    if(HoraDoAtaque(Boss_fase2.pos.x, Boss_fase2.pos.y,curr_posicao_plyr)){  
+                                    if(HoraDoAtaque(Boss_fase2.pos.x, Boss_fase2.pos.y,curr_posicao_plyr,18)){  
                                         printf("\nHORA DE ATACAR\n");
                                         Boss_fase2.action = sm_attack;
                                         if(Boss_fase2.pos.x < curr_posicao_plyr.x){
@@ -1032,7 +1020,7 @@ int main(int argc, char *argv[]) {
                                             Boss_fase2.action = sm_walk;
                                             Boss_fase2.dir = sm_esquerda; // não recordo-me a direção original do sprite 
                                         }
-                                        if(Esta_nas_proximidades(jogador.pos.x,jogador.pos.y,Boss_fase2.pos.x,Boss_fase2.pos.y,20)){
+                                        if(Esta_nas_proximidades(jogador.pos.x,jogador.pos.y,Boss_fase2.pos.x,Boss_fase2.pos.y,8)){
                                             vzs_atingido++;
                                             if(vzs_atingido > 17){
                                                 al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
@@ -1120,7 +1108,8 @@ int main(int argc, char *argv[]) {
                                         } 
                                     }
                                     if((Inimigos_fase3[i].dir == sm_esquerda  && Inimigos_fase3[i].action == sm_walk )){
-                                        if(!Existe_Obstaculo(Inimigos_fase3[i].pos.x - Inimigos_fase3[i].pos.dx, Inimigos_fase3[i].pos.y,bit_map_Fase1) && (!HoraDoAtaque(Inimigos_fase3[i].pos.x, Inimigos_fase3[i].pos.y, curr_posicao_plyr))){  
+                                        if(!Existe_Obstaculo(Inimigos_fase3[i].pos.x - Inimigos_fase3[i].pos.dx, Inimigos_fase3[i].pos.y,bit_map_Fase1)
+                                           && (!HoraDoAtaque(Inimigos_fase3[i].pos.x, Inimigos_fase3[i].pos.y, curr_posicao_plyr,32))){  
                                             //printf("\nNAO EXISTE OBSTACULO A ESQUERDA\n");
                                             Inimigos_fase3[i].pos.x -= Inimigos_fase3[i].pos.dx;
                                         }   
@@ -1136,7 +1125,7 @@ int main(int argc, char *argv[]) {
                                     else{
                                         Inimigos_fase3[i].sprite.curr_X  = 0;
                                     }
-<<<<<<< HEAD
+
                                    /*if(HoraDoAtaque(Inimigos_fase3[i].pos.x, Inimigos_fase3[i].pos.y,curr_posicao_plyr)){
                                         Inimigos_fase3[i].action = sm_attack;
                                         if(Inimigos_fase3[i].pos.x < curr_posicao_plyr.x){
@@ -1160,8 +1149,7 @@ int main(int argc, char *argv[]) {
                                         Inimigos_fase3[i].sprite.curr_Y = 0;
                                         Inimigos_fase3[i].sprite.curr_X = 0;
                                     }*/
-=======
->>>>>>> 0ccfac5fa87ef23d9fad3a98bb99254a3d147322
+
                                     if(Inimigos_fase3[i].hitted == false ){
                                         // printf("\n\tPOSICAO JOGADOR : %d,%d \n\t POSICAO SOLDADO: %d, %d", 
                                         //curr_posicao_plyr.x, curr_posicao_plyr.y, Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y);
@@ -1230,7 +1218,7 @@ int main(int argc, char *argv[]) {
                                 if(((al_get_time() - marcadorDeTempo) > 0.03169) || (marcadorDeTempo == 0 && vivo)){
                                     //timing = 0;
                                     if(Presidente.dir == sm_direita && Presidente.action == sm_walk){
-                                        if(!Existe_Obstaculo(Presidente.pos.x + Presidente.pos.dx + 32, Presidente.pos.y, bit_map_Fase2) && !HoraDoAtaque(Presidente.pos.x,Presidente.pos.y, curr_posicao_plyr)){  
+                                        if(!Existe_Obstaculo(Presidente.pos.x + Presidente.pos.dx + 32, Presidente.pos.y, bit_map_Fase2) && !HoraDoAtaque(Presidente.pos.x,Presidente.pos.y, curr_posicao_plyr,20)){  
                                             // printf("\nNAO EXISTE OBSTACULO A DIREITA \n");
                                             Presidente.pos.x += Presidente.pos.dx;
                                         }
@@ -1239,7 +1227,7 @@ int main(int argc, char *argv[]) {
                                         } 
                                     }
                                     if((Presidente.dir == sm_esquerda  && Presidente.action == sm_walk )){
-                                        if(!Existe_Obstaculo(Presidente.pos.x  - Presidente.pos.dx, Presidente.pos.y,bit_map_Fase2) && (!HoraDoAtaque(Presidente.pos.x, Presidente.pos.y, curr_posicao_plyr))){  
+                                        if(!Existe_Obstaculo(Presidente.pos.x  - Presidente.pos.dx, Presidente.pos.y,bit_map_Fase2) && (!HoraDoAtaque(Presidente.pos.x, Presidente.pos.y, curr_posicao_plyr,20))){  
                                             //printf("\nNAO EXISTE OBSTACULO A ESQUERDA\n");
                                             Presidente.pos.x -= Presidente.pos.dx;
                                         }   
@@ -1255,7 +1243,7 @@ int main(int argc, char *argv[]) {
                                     else{
                                         Presidente.sprite.curr_X  = 0;
                                     }
-                                    if(HoraDoAtaque(Presidente.pos.x, Presidente.pos.y,curr_posicao_plyr)){  
+                                    if(HoraDoAtaque(Presidente.pos.x, Presidente.pos.y,curr_posicao_plyr,20)){  
                                         printf("\nHORA DE ATACAR\n");
                                         Presidente.action = sm_attack;
                                         if(Presidente.pos.x < curr_posicao_plyr.x){
@@ -1342,6 +1330,9 @@ int main(int argc, char *argv[]) {
                     }
                     al_draw_textf(fonte_creditos, al_map_rgb(255, 0, 0), 40, 20, ALLEGRO_ALIGN_LEFT, "Vidas: %d", jogador.vida);
                     printf("Quantidade de vida jogador : %d\n", jogador.vida);
+                    if(jogador.vida <= 0 && false){
+                        estado_atual = GAME_OVER;
+                    }
                     al_flip_display();
                     marcadorDeTempo= al_get_time();
                     redraw = false;
