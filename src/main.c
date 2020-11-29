@@ -238,7 +238,7 @@ int BitMaps[3][21][30] = {
 PERSONAGEM jogador;
 
 int n_soldados_medievais = 1;  // numero de soldados medievais
-int n_soldados_militares = 1;
+int n_soldados_militares = 4;
 int n_inimigos = 30;
 /// A função cria os soldados medievais, configurndo suas structs;
 ///
@@ -1010,19 +1010,22 @@ int main(int argc, char *argv[]) {
                                     else{
                                         Boss_fase2.sprite.curr_X  = 0;
                                     }
-                                    if(HoraDoAtaque(Boss_fase2.pos.x, Boss_fase2.pos.y,curr_posicao_plyr,18)){  
-                                        printf("\nHORA DE ATACAR\n");
+                                    if(HoraDoAtaque(Boss_fase2.pos.x, Boss_fase2.pos.y,curr_posicao_plyr,30)){  
+                                        //printf("\nHORA DE ATACAR\n");
                                         Boss_fase2.action = sm_attack;
                                         if(Boss_fase2.pos.x < curr_posicao_plyr.x){
                                             Boss_fase2.dir = sm_direita;
+                                           // Boss_fase2.action = sm_walk;
                                         }
                                         else{
-                                            Boss_fase2.action = sm_walk;
+                                            
                                             Boss_fase2.dir = sm_esquerda; // não recordo-me a direção original do sprite 
+                                           // Boss_fase2.action = sm_walk;
                                         }
-                                        if(Esta_nas_proximidades(jogador.pos.x,jogador.pos.y,Boss_fase2.pos.x,Boss_fase2.pos.y,8)){
+                                        if(Esta_nas_proximidades(jogador.pos.x ,jogador.pos.y,Boss_fase2.pos.x,Boss_fase2.pos.y,23)){
                                             vzs_atingido++;
                                             if(vzs_atingido > 17){
+                                                printf("\nEstou batendo nesse bosta \n");
                                                 al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
                                                 al_draw_tinted_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
                                                     al_map_rgb(135,0,0), jogador.frames.currentFrame, 0, jogador.frames.w_Frame, 
@@ -1031,19 +1034,22 @@ int main(int argc, char *argv[]) {
                                                 vzs_atingido = 0;
                                             }
                                         }
-                                        else {
+                                        else{
+                                            //Boss_fase2.action = sm_walk;
                                             vzs_atingido = 0;
                                         }
                                         times_of_attack_enemy += 1;
+                                    }else{
+                                        Boss_fase2.action = sm_walk;
                                     }
                                     //isso meio que  ta mensurando o tempo de ataque
-                                    if(times_of_attack_enemy > 20 && Boss_fase2.action == sm_attack){
+                                    if(times_of_attack_enemy > 40 && Boss_fase2.action == sm_attack){
                                         printf("\nParou o ataque\n");
                                         Boss_fase2.action = sm_walk;
                                         times_of_attack_enemy  = 0;
                                     }
                                     
-                                    if(Esta_nas_proximidades(Boss_fase2.pos.x, Boss_fase2.pos.y,
+                                    /*if(Esta_nas_proximidades(Boss_fase2.pos.x, Boss_fase2.pos.y,
                                              curr_posicao_plyr.x, curr_posicao_plyr.y, 100)){
                                                  if(Boss_fase2.pos.x < curr_posicao_plyr.x){
                                                      if(!Existe_Obstaculo(Boss_fase2.pos.x + Boss_fase2.pos.x,
@@ -1051,7 +1057,7 @@ int main(int argc, char *argv[]) {
                                                              Boss_fase2.pos.x += Boss_fase2.pos.dx;
                                                             }
                                                  }
-                                    }
+                                    }*/
                                     //Soldado_militar[i].action= sm_death;  
                                     //printf("EM Y_IMG %d X_IMG %d\n", Soldado_militar[i].sprite.curr_Y, Soldado_militar[i].sprite.curr_X);
                                 }
