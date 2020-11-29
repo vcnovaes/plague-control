@@ -307,7 +307,7 @@ int main(int argc, char *argv[]) {
     bool redraw = true;
     int times_of_attack_enemy = 0;
     int times_of_attack_player = 20;
-    int Fase = Fase2;
+    int Fase = Fase1;
     int vzs_atingido = 0;
     int estado_atual = -1;
     POSICAO curr_posicao_plyr;
@@ -460,14 +460,14 @@ int main(int argc, char *argv[]) {
         }
         else if(estado_atual == FASE1 || estado_atual == FASE2 || estado_atual == FASE3){
             //Apresentar as telas adicionais entre as fases
-            if(entrouFase1 == true){ // mudei aqui false->true
+            if(entrouFase1 == false){ // mudei aqui false->true
                 al_draw_bitmap(telasAdicionais[0], 0, 0, 0);
                 al_flip_display();
                 al_rest(7.0);
                 entrouFase1 = true;
                 Fase = Fase1;
             }
-            if(entrouFase2 == true && passouFase1 == false){// mudei aqui false->true e true->false
+            if(entrouFase2 == false && passouFase1 == true){// mudei aqui false->true e true->false
                 al_draw_bitmap(telasAdicionais[1], 0, 0, 0);
                 al_flip_display();
                 al_rest(7.0);
@@ -477,7 +477,7 @@ int main(int argc, char *argv[]) {
                 entrouFase2 = true;
                 Fase = Fase2;
             }
-            if(entrouFase3 == false && passouFase2 == false){// mudei aqui true->false/ segundo 
+            if(entrouFase3 == false && passouFase2 == true){// mudei aqui true->false/ segundo 
                 al_draw_bitmap(telasAdicionais[3], 0, 0, 0);
                 al_flip_display();
                 al_rest(7.0);
@@ -839,10 +839,6 @@ int main(int argc, char *argv[]) {
                                 // int timing = (al_get_time() - marcadorDeTempo) + timing;  
                                 // esse if verifica o intervalo para mudar de frame 
                                 // esse numero esquisito ai é o intervalo
-<<<<<<< HEAD
-                                //al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
-=======
->>>>>>> 0fb9f2ac63be590e4018a81cbffeb373590df84c
                                 hitted = false;
                                 if(jogador.Acao == Attack && Esta_nas_proximidades(Soldado_militar[i].pos.x,
                                  Soldado_militar[i].pos.y, jogador.pos.x, jogador.pos.y, 23)){
@@ -1027,7 +1023,7 @@ int main(int argc, char *argv[]) {
                                         Boss_fase2.action = sm_walk;
                                         times_of_attack_enemy  = 0;
                                     }
-                                    /*
+                                    
                                     if(Esta_nas_proximidades(Boss_fase2.pos.x, Boss_fase2.pos.y,
                                              curr_posicao_plyr.x, curr_posicao_plyr.y, 100)){
                                                  if(Boss_fase2.pos.x < curr_posicao_plyr.x){
@@ -1036,7 +1032,7 @@ int main(int argc, char *argv[]) {
                                                              Boss_fase2.pos.x += Boss_fase2.pos.dx;
                                                             }
                                                  }
-                                    }*/
+                                    }
                                     //Soldado_militar[i].action= sm_death;  
                                     //printf("EM Y_IMG %d X_IMG %d\n", Soldado_militar[i].sprite.curr_Y, Soldado_militar[i].sprite.curr_X);
                                 }
@@ -1081,7 +1077,8 @@ int main(int argc, char *argv[]) {
                                 if(((al_get_time() - marcadorDeTempo) > 0.03169) || (marcadorDeTempo == 0)){
                                     //timing = 0;
                                     if(Inimigos_fase3[i].dir == sm_direita && Inimigos_fase3[i].action == sm_walk){
-                                        if(!Existe_Obstaculo(Inimigos_fase3[i].pos.x + Inimigos_fase3[i].pos.dx + 32, Inimigos_fase3[i].pos.y,bit_map_Fase3) && !HoraDoAtaque(Inimigos_fase3[i].pos.x, Inimigos_fase3[i].pos.y, curr_posicao_plyr)){
+                                        if(!Existe_Obstaculo(Inimigos_fase3[i].pos.x + Inimigos_fase3[i].pos.dx + 32,
+                                           Inimigos_fase3[i].pos.y,bit_map_Fase3) && true){
                                                 printf("\nNAO EXISTE OBSTACULO A DIREITA \n");
                                                 Inimigos_fase3[i].pos.x += Inimigos_fase3[i].pos.dx;
                                         }
@@ -1106,7 +1103,7 @@ int main(int argc, char *argv[]) {
                                     else{
                                         Inimigos_fase3[i].sprite.curr_X  = 0;
                                     }
-                                    if(HoraDoAtaque(Inimigos_fase3[i].pos.x, Inimigos_fase3[i].pos.y,curr_posicao_plyr)){
+                                   /*if(HoraDoAtaque(Inimigos_fase3[i].pos.x, Inimigos_fase3[i].pos.y,curr_posicao_plyr)){
                                         Inimigos_fase3[i].action = sm_attack;
                                         if(Inimigos_fase3[i].pos.x < curr_posicao_plyr.x){
                                             Inimigos_fase3[i].dir = sm_direita;
@@ -1120,15 +1117,15 @@ int main(int argc, char *argv[]) {
                                     if(times_of_attack_enemy > 20){
                                         Inimigos_fase3[i].action = sm_walk;
                                         times_of_attack_enemy  = 0;
-                                    }
+                                    }*/
                                     // a part e da morte não está funcionando muito bem
-                                    if(Inimigos_fase3[i].vida  <= 0){
+                                   /* if(Inimigos_fase3[i].vida  <= 0){
                                         Inimigos_fase3[i].action = sm_death;
                                     }
                                     if(Inimigos_fase3[i].action == sm_death){
                                         Inimigos_fase3[i].sprite.curr_Y = 0;
                                         Inimigos_fase3[i].sprite.curr_X = 0;
-                                    }
+                                    }*/
                                     if(Inimigos_fase3[i].hitted == false ){
                                         // printf("\n\tPOSICAO JOGADOR : %d,%d \n\t POSICAO SOLDADO: %d, %d", 
                                         //curr_posicao_plyr.x, curr_posicao_plyr.y, Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y);
