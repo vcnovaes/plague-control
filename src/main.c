@@ -237,9 +237,9 @@ int BitMaps[3][21][30] = {
 
 PERSONAGEM jogador;
 
-int n_soldados_medievais = 0;  // numero de soldados medievais
-int n_soldados_militares = 0;
-int n_inimigos = 0;
+int n_soldados_medievais = 10;  // numero de soldados medievais
+int n_soldados_militares = 15;
+int n_inimigos = 30;
 /// A função cria os soldados medievais, configurndo suas structs;
 ///
 SOLDADO_MEDIEVAL  *Soldado_medieval = NULL, *Soldado_militar = NULL, *Inimigos_fase3 = NULL, 
@@ -368,7 +368,7 @@ int main(int argc, char *argv[]) {
     al_attach_sample_instance_to_mixer(somFundoInstance, al_get_default_mixer());
 
     //Colocando a musica para tocar
-  ///  al_play_sample_instance(somFundoInstance);
+    al_play_sample_instance(somFundoInstance);
 
 
     //Inicializando o estado atual como o menu
@@ -1281,7 +1281,7 @@ int main(int argc, char *argv[]) {
                                         }
                                         if(Esta_nas_proximidades(jogador.pos.x,jogador.pos.y,Presidente.pos.x,Presidente.pos.y,25)){
                                             vzs_atingido_p++;
-                                            if(vzs_atingido_p > 36){
+                                            if(vzs_atingido_p > 20){
                                                 jogador.vida--;
                                                 vzs_atingido_p = 0;
                                                 al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
@@ -1364,7 +1364,7 @@ int main(int argc, char *argv[]) {
                     }
                     al_draw_textf(fonte_creditos, al_map_rgb(255, 0, 0), 40, 20, ALLEGRO_ALIGN_LEFT, "Vidas: %d", jogador.vida);
                     printf("Quantidade de vida jogador : %d\n", jogador.vida);
-                    if(jogador.vida <= 0 && false){
+                    if(jogador.vida <= 0){
                         estado_atual = GAME_OVER;
                     }
                     al_flip_display();

@@ -33,7 +33,7 @@ void Criar_Personagem(PERSONAGEM * jogador, char * Imagens_Andar[4], char * Imag
 
     jogador->loc.i = 0;
     jogador->loc.j = 0;
-    jogador->vida = 3;
+    jogador->vida = 20;
 
  }
 void Personagem_SetFrames(PERSONAGEM * personagem, int numero_de_frames, int width_frame, int height_frame){
