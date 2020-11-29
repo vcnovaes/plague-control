@@ -336,8 +336,8 @@ void Criar_BossFase1(SOLDADO_MEDIEVAL *Boss_fase1, char *Imagens_walk, char *Ima
     al_convert_mask_to_alpha(Boss_fase1->sprite.Imagem_walk_EAST, al_map_rgb(0, 0, 0));
     al_convert_mask_to_alpha(Boss_fase1->sprite.Imagem_attack_EAST, al_map_rgb(0, 0, 0));
 
-    Boss_fase1->sprite.Height = 32;
-    Boss_fase1->sprite.Width = 20;
+    Boss_fase1->sprite.Height = 40;
+    Boss_fase1->sprite.Width = 111.25;
     Boss_fase1->sprite.curr_X = 0;
     Boss_fase1->sprite.curr_Y = 0;
 

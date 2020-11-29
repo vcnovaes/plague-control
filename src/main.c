@@ -72,10 +72,10 @@ char *Boss_Attack_Fase3[2] = {
     "Graficos/Pixel_Art_Gamejam/Fase 3/Presidente/presidente_punch_left.png",
     "Graficos/Pixel_Art_Gamejam/Fase 3/Presidente/presidente_punch_right.png"   
 };
-char *Boss_Walk_Fase1= 
-    "Graficos/Pixel_Art_Gamejam/Fase 1/PRIEST-WALK-RIGHT/padre_walk_right_sprite.jpeg";
-char *Boss_Attack_Fase1= 
-    "Graficos/Pixel_Art_Gamejam/Fase 1/PRIEST_THUNDER/padre_attack_right_sprite.jpeg";
+char *Boss_Walk_Fase1 = 
+    "Graficos/Pixel_Art_Gamejam/Fase 1/Mago/mago_walk_sprite.png";
+char *Boss_Attack_Fase1 = 
+    "Graficos/Pixel_Art_Gamejam/Fase 1/Mago/mago_ataque2_sprite.png";
 
 // para cada imagem ---> height = 52  
 ////////            ---> width = 196
