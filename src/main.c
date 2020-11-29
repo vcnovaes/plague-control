@@ -751,7 +751,7 @@ int main(int argc, char *argv[]) {
                                 if(Boss_fase1.dir == sm_direita && Boss_fase1.action == sm_walk){
                                     if(!Existe_Obstaculo(Boss_fase1.pos.x + Boss_fase1.pos.dx + 32, Boss_fase1.pos.y, bit_map_Fase1)
                                      && !HoraDoAtaque(Boss_fase1.pos.x,Boss_fase1.pos.y, curr_posicao_plyr,20)){  
-                                        // printf("\nNAO EXISTE OBSTACULO A DIREITA \n");
+                                         printf("\nNAO EXISTE OBSTACULO A DIREITA \n");
                                         Boss_fase1.pos.x += Boss_fase1.pos.dx;
                                     }
                                     else{ 
@@ -769,8 +769,8 @@ int main(int argc, char *argv[]) {
                                             Boss_fase1.dir = sm_direita;
                                         }
                                     }
-                                    Boss_fase1.sprite.curr_Y = Boss_fase1.sprite.Height * Boss_fase1.action;
-                                    if((Boss_fase1.sprite.curr_X + Boss_fase1.sprite.Width) < 64 && Boss_fase1.action == sm_walk){
+                                    Boss_fase1.sprite.curr_Y = 0;
+                                    if((Boss_fase1.sprite.curr_X + Boss_fase1.sprite.Width) < 890 && Boss_fase1.action == sm_walk){
                                         Boss_fase1.sprite.curr_X += Boss_fase1.sprite.Width;
                                     }
                                     else{
@@ -783,9 +783,28 @@ int main(int argc, char *argv[]) {
                                             Boss_fase1.dir = sm_direita;
                                         }
                                         else{
+                            
                                             Boss_fase1.dir = sm_esquerda; // não recordo-me a direção original do sprite 
                                         }
+                                        if(Esta_nas_proximidades(jogador.pos.x ,jogador.pos.y,Boss_fase1.pos.x,Boss_fase1.pos.y,23)){
+                                            vzs_atingido++;
+                                            if(vzs_atingido > 17){
+                                                printf("\nEstou batendo nesse bosta \n");
+                                                al_play_sample(efeito_soco, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
+                                                al_draw_tinted_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
+                                                    al_map_rgb(135,0,0), jogador.frames.currentFrame, 0, jogador.frames.w_Frame, 
+                                                    jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0);
+                                                jogador.vida--;
+                                                vzs_atingido = 0;
+                                            }
+                                        }
+                                        else{
+                                            //Boss_fase2.action = sm_walk;
+                                            vzs_atingido = 0;
+                                        }
                                         times_of_attack_enemy += 1;
+                                    }else{
+                                        Boss_fase1.action = sm_walk;
                                     }
                                     /*
                                     if(Esta_nas_proximidades(Boss_fase1.pos.x, Boss_fase1.pos.y,
@@ -825,14 +844,20 @@ int main(int argc, char *argv[]) {
                                                                     Boss_fase1.sprite.Height, Boss_fase1.pos.x, 
                                                                     Boss_fase1.pos.y,(Boss_fase1.dir == sm_direita)? 0 : 1);
                                     }
-                                else if(Boss_fase1.action == sm_attack){
-                                    al_draw_bitmap_region(Boss_fase1.sprite.Imagem_attack_EAST,
+                                    else if(Boss_fase1.action == sm_attack){
+                                        al_draw_bitmap_region(Boss_fase1.sprite.Imagem_attack_EAST,
                                                             Boss_fase1.sprite.curr_X = 0, Boss_fase1.sprite.curr_Y = 0,
                                                             Boss_fase1.sprite.Width, Boss_fase1.sprite.Height,
                                                             Boss_fase1.pos.x, Boss_fase1.pos.y,
-                                                            (Boss_fase1.dir == sm_direita)? 1: 0);
+                                                            (Boss_fase1.dir == sm_direita)? 0: 1);
                                     //al_rest(13.0);
-                                }
+                                    }else {
+                                        al_draw_bitmap_region(Boss_fase1.sprite.Imagem_walk_EAST,
+                                                            Boss_fase1.sprite.curr_X , Boss_fase1.sprite.curr_Y = 0,
+                                                            Boss_fase1.sprite.Width, Boss_fase1.sprite.Height,
+                                                            Boss_fase1.pos.x, Boss_fase1.pos.y,
+                                                            (Boss_fase1.dir == sm_direita)? 0: 1);
+                                    }
                                 n_soldados_medievais = 0;
                             }
                         } 
@@ -985,7 +1010,8 @@ int main(int argc, char *argv[]) {
                                 if(((al_get_time() - marcadorDeTempo) > 0.03169) || (marcadorDeTempo == 0 && vivo)){
                                     //timing = 0;
                                     if(Boss_fase2.dir == sm_direita && Boss_fase2.action == sm_walk){
-                                        if(!Existe_Obstaculo(Boss_fase2.pos.x + Boss_fase2.pos.dx + 32, Boss_fase2.pos.y, bit_map_Fase2) && !HoraDoAtaque(Boss_fase2.pos.x,Boss_fase2.pos.y, curr_posicao_plyr,18)){  
+                                        if(!Existe_Obstaculo(Boss_fase2.pos.x + Boss_fase2.pos.dx + 32, Boss_fase2.pos.y, bit_map_Fase2) && 
+                                        !HoraDoAtaque(Boss_fase2.pos.x,Boss_fase2.pos.y, curr_posicao_plyr,18)){  
                                             // printf("\nNAO EXISTE OBSTACULO A DIREITA \n");
                                             Boss_fase2.pos.x += Boss_fase2.pos.dx;
                                         }

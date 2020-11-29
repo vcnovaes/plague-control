@@ -346,5 +346,7 @@ void Criar_BossFase1(SOLDADO_MEDIEVAL *Boss_fase1, char *Imagens_walk, char *Ima
     Boss_fase1->action = sm_walk;
     Boss_fase1->pos.y = 64;
     Boss_fase1->pos.x = 448;
+    Boss_fase1->pos.dx = 3;
+    Boss_fase1->pos.dy = 3;
     Boss_fase1->hitted = false; 
 }
