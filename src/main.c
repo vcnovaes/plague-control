@@ -1161,19 +1161,17 @@ int main(int argc, char *argv[]) {
                                         //curr_posicao_plyr.x, curr_posicao_plyr.y, Soldado_medieval[i].pos.x, Soldado_medieval[i].pos.y);
                                         switch (Inimigos_fase3[i].tipo){
                                             case 1:
-                                                if(Esta_nas_proximidades(jogador.pos.x,jogador.pos.y,Inimigos_fase3[i].pos.x,Inimigos_fase3[i].pos.y,10)){
+                                                if(Esta_nas_proximidades(jogador.pos.x,jogador.pos.y,Inimigos_fase3[i].pos.x,Inimigos_fase3[i].pos.y,3)){
                                                     vzs_atingido_bat++;
-                                                    if(vzs_atingido_bat > 1){
-                                                        vzs_atingido_bat=0;
-                                                        jogador.vida--;
-                                                        al_draw_tinted_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
+                                                    al_draw_tinted_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
                                                         al_map_rgb(180,0,0), jogador.frames.currentFrame, 0, jogador.frames.w_Frame, 
                                                         jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0);
+                                                    if(vzs_atingido_bat > 10){
+                                                        vzs_atingido_bat=0;
+                                                        jogador.vida--;
                                                     }
                                                 }
-                                                else {
-                                                    vzs_atingido_bat = 0;
-                                                }
+                            
                                                 
                                                 
                                                 al_draw_bitmap_region(Inimigos_fase3[i].sprite.Imagem,
@@ -1184,20 +1182,16 @@ int main(int argc, char *argv[]) {
                                                 break;
                                             default:
 
-                                                if(Esta_nas_proximidades(jogador.pos.x,jogador.pos.y,Inimigos_fase3[i].pos.x,Inimigos_fase3[i].pos.y,6)){
+                                                if(Esta_nas_proximidades(jogador.pos.x,jogador.pos.y,Inimigos_fase3[i].pos.x,Inimigos_fase3[i].pos.y,2)){
                                                     vzs_atingido_virus++;
-                                                    if(vzs_atingido_virus > 1){
+                                                    al_draw_tinted_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
+                                                        al_map_rgb(0,180,0), jogador.frames.currentFrame, 0, jogador.frames.w_Frame, 
+                                                        jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0);
+                                                    if(vzs_atingido_virus > 10){
                                                         vzs_atingido_virus=0;
                                                         jogador.vida--;
-                                                        al_draw_tinted_bitmap_region(jogador.imagem_caminhar[jogador.CurrentDir],
-                                                        al_map_rgb(180,0,0), jogador.frames.currentFrame, 0, jogador.frames.w_Frame, 
-                                                        jogador.frames.h_Frame, jogador.pos.x, jogador.pos.y, 0);
                                                     }
                                                 }
-                                                else {
-                                                    vzs_atingido_virus = 0;
-                                                }
-
                                                 al_draw_bitmap_region(Inimigos_fase3[i].sprite.Imagem, 0, 0,
                                                 Inimigos_fase3[i].sprite.Width, Inimigos_fase3[i].sprite.Height,
                                                 Inimigos_fase3[i].pos.x, Inimigos_fase3[i].pos.y,
@@ -1277,8 +1271,11 @@ int main(int argc, char *argv[]) {
                                         }
                                         times_of_attack_enemy += 1;
                                     }
+                                    else{
+                                        Presidente.action = sm_walk;
+                                    }
                                     //isso meio que  ta mensurando o tempo de ataque
-                                    if(times_of_attack_enemy > 20 && Presidente.action == sm_attack){
+                                    if(times_of_attack_enemy > 35 && Presidente.action == sm_attack){
                                         printf("\nParou o ataque\n");
                                         Presidente.action = sm_walk;
                                         times_of_attack_enemy  = 0;
